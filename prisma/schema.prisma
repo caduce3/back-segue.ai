@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  ATIVO
+  INATIVO
+}
+
+enum TipoPasta {
+  PAROQUIA
+  PADRE
+  FINANCAS
+  MONTAGEM
+  POS
+  PALESTRA
+  FICHAS
+}
+
+enum TipoTransacao {
+  DEPOSITO
+  DESPESA
+  INVESTIMENTO
+}
+
+enum CategoriaTransacao {
+  COMIDA
+  TRANSPORTE
+  PATROCINIO
+  DOACAO
+  BINGO
+  OUTRO
+}
+
+enum MetodoPagamentoTransacao {
+  DINHEIRO
+  CARTAO_CREDITO
+  CARTAO_DEBITO
+  PIX
+  TRANSFERENCIA_BANCARIA
+  BOLETO_BANCARIO
+  OUTRO
+}
+
+// Modelo para transações
+model Transaction {
+  id              String                   @id @default(uuid())
+  nome            String
+  tipo            TipoTransacao
+  valor           Float
+  categoria       CategoriaTransacao
+  descricao       String?
+  metodoPagamento MetodoPagamentoTransacao
+  date            DateTime
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
+  igreja          Igreja                   @relation(fields: [igrejaId], references: [id])
+  igrejaId        String
+}
+
+// Modelo para Igreja
+model Igreja {
+  id          String        @id @default(uuid())
+  nome        String
+  cnpj        String
+  email       String
+  senha       String
+  telefone    String
+  endereco    String
+  cidade      String
+  estado      String
+  cep         String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  User        User[]
+  Transaction Transaction[]
+  status      Status
+  pasta       TipoPasta     @default(PAROQUIA)
+}
+
+// Modelo para usuarios da igreja
+model User {
+  id        String    @id @default(uuid())
+  nome      String
+  email     String
+  senha     String
+  igreja    Igreja    @relation(fields: [igrejaId], references: [id])
+  igrejaId  String
+  status    Status    @default(INATIVO)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  pasta     TipoPasta
+}

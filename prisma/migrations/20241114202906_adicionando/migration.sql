@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Igreja" ALTER COLUMN "pasta" SET DEFAULT 'PAROQUIA';
