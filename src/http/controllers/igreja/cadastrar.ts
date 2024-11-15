@@ -1,3 +1,4 @@
+import { CnpjInvalido } from "@/use-cases/@errors/erro-cnpj-invalido";
 import { CNPJjaExiste } from "@/use-cases/@errors/igreja/erro-cnpj-ja-existe";
 import { EmailJaCadastrado } from "@/use-cases/@errors/igreja/erro-email-ja-existe";
 import { makeCadastrarIgrejaUseCase } from "@/use-cases/@factories/igreja/make-cadastrar-igreja-use-case";
@@ -40,7 +41,8 @@ export async function cadastrarIgreja(
   } catch (error) {
     if (
       error instanceof EmailJaCadastrado ||
-      error instanceof CNPJjaExiste 
+      error instanceof CNPJjaExiste ||
+      error instanceof CnpjInvalido 
     ) {
       return reply.status(409).send({ message: error.message });
     }
@@ -49,6 +51,6 @@ export async function cadastrarIgreja(
 
   return reply.status(201).send({
     message:
-      "Igreja cadastrada com sucesso! Entre em contato com: cadulucenapj@gmail.com para ativar sua conta.",
+      "Igreja cadastrada com sucesso! Entre em contato com: cadulucenapj@gmail.com para qualquer dúvida.",
   });
 }

@@ -1,10 +1,10 @@
 import fastify from "fastify";
-import { appRoutes } from "./http/controllers/routes";
 import { ZodError } from "zod";
 import { env } from "./env";
 import fastifyJwt from "@fastify/jwt";
 import fastifyCookie from "@fastify/cookie";
 import fastifyCors from "@fastify/cors";
+import { igrejaRoutes } from "./http/controllers/routes/user/igreja-routes";
 
 export const app = fastify()
 
@@ -27,7 +27,7 @@ app.register(fastifyJwt, {
 })
 
 app.register(fastifyCookie)
-app.register(appRoutes)
+app.register(igrejaRoutes)
 
 app.setErrorHandler((error, _request, reply) => {
     if(error instanceof ZodError) {

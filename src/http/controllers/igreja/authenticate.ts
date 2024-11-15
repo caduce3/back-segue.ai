@@ -4,23 +4,23 @@ import { InvalidCredentialsError } from "@/use-cases/@errors/invalid-credentials
 import { makeAuthenticateIgrejaUseCase } from "@/use-cases/@factories/igreja/make-authenticate-igreja-use-case";
 import { ErroContaInvativa } from "@/use-cases/@errors/erro-conta-inativa";
 
-export async function authenticateIgrejaFuncionario(
+export async function authenticateIgreja(
   request: FastifyRequest,
   reply: FastifyReply
 ) {
-  const authenticateIgrejaFuncionarioBodySchema = z.object({
+  const authenticateIgrejaBodySchema = z.object({
     email: z.string().email(),
     senha: z.string().min(6),
   });
 
-  const { email, senha } = authenticateIgrejaFuncionarioBodySchema.parse(
+  const { email, senha } = authenticateIgrejaBodySchema.parse(
     request.body
   );
 
   try {
-    const authenticateIgrejaFuncionarioUseCase = makeAuthenticateIgrejaUseCase();
+    const authenticateIgrejaUseCase = makeAuthenticateIgrejaUseCase();
 
-    const { igreja } = await authenticateIgrejaFuncionarioUseCase.execute({
+    const { igreja } = await authenticateIgrejaUseCase.execute({
       email,
       senha,
     });
