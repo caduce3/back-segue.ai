@@ -90,6 +90,7 @@ model EquipeDirigente {
   email     String    @unique
   senha     String
   telefone  String
+  ano       String
   igreja    Igreja    @relation(fields: [igrejaId], references: [id])
   igrejaId  String
   status    Status    @default(INATIVO)
