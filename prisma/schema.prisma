@@ -89,6 +89,7 @@ model User {
   nome      String
   email     String    @unique
   senha     String
+  telefone  String
   igreja    Igreja    @relation(fields: [igrejaId], references: [id])
   igrejaId  String
   status    Status    @default(INATIVO)

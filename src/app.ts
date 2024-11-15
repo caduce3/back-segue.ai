@@ -4,7 +4,7 @@ import { env } from "./env";
 import fastifyJwt from "@fastify/jwt";
 import fastifyCookie from "@fastify/cookie";
 import fastifyCors from "@fastify/cors";
-import { igrejaRoutes } from "./http/controllers/routes/user/igreja-routes";
+import { igrejaRoutes } from "./http/controllers/routes/igreja/igreja-routes";
 
 export const app = fastify()
 

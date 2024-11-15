@@ -1,16 +1,16 @@
 import { FastifyInstance } from "fastify";
 
 import { cadastrarIgreja } from "../../igreja/cadastrar";
-import { authenticateIgreja } from "../../igreja/authenticate";
-import { refresh } from "../../igreja/refresh";
+import { authenticateIgreja } from "../../authenticate/authenticate";
+import { refresh } from "../../authenticate/refresh";
 import { verifyJwt } from "@/http/middlewares/verify-jwt";
-import { getProfileIgreja } from "../../igreja/profile";
+import { getProfile } from "../../authenticate/profile";
 
 export async function igrejaRoutes(app: FastifyInstance) {
     app.post('/cadastrar_igreja', cadastrarIgreja)
     app.post('/sessions_igreja', authenticateIgreja)
     app.patch('/token/refresh', refresh)
 
-    app.get('/me_igreja', { onRequest: [verifyJwt] }, getProfileIgreja);
+    app.get('/me', { onRequest: [verifyJwt] }, getProfile);
 
 }

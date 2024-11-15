@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { InvalidCredentialsError } from "@/use-cases/@errors/invalid-credentials-error";
-import { makeAuthenticateIgrejaUseCase } from "@/use-cases/@factories/igreja/make-authenticate-igreja-use-case";
+import { makeAuthenticateIgrejaUseCase } from "@/use-cases/@factories/igreja/make-authenticate-use-case";
 import { ErroContaInvativa } from "@/use-cases/@errors/erro-conta-inativa";
 
 export async function authenticateIgreja(
@@ -20,18 +20,18 @@ export async function authenticateIgreja(
   try {
     const authenticateIgrejaUseCase = makeAuthenticateIgrejaUseCase();
 
-    const { igreja } = await authenticateIgrejaUseCase.execute({
+    const { usuario } = await authenticateIgrejaUseCase.execute({
       email,
       senha,
     });
 
     const token = await reply.jwtSign(
       {
-        pasta: igreja.pasta,
+        pasta: usuario.pasta,
       },
       {
         sign: {
-          sub: igreja.id,
+          sub: usuario.id,
           expiresIn: "24h",
         },
       }
@@ -39,11 +39,11 @@ export async function authenticateIgreja(
 
     const refreshToken = await reply.jwtSign(
       {
-        pasta: igreja.pasta,
+        pasta: usuario.pasta,
       },
       {
         sign: {
-          sub: igreja.id,
+          sub: usuario.id,
           expiresIn: "7d",
         },
       }

@@ -1,9 +1,11 @@
 import { PrismaIgrejaRepository } from "@/repositories/prisma/prisma-igreja-repository";
-import { PegarUnicaIgrejaUseCase } from "@/use-cases/igreja/pegar-unica-igreja";
+import { PrismaUserRepository } from "@/repositories/prisma/prisma-user-repository";
+import { GetUnicoUsuarioUseCase } from "@/use-cases/authenticate/profile";
 
-export function makePegarUnicaIgrejaUseCase() {
+export function makeGetUnicoUsuarioUseCase() {
   const igrejaRepository = new PrismaIgrejaRepository();
-  const pegarUnicaIgrejaUseCase = new PegarUnicaIgrejaUseCase(igrejaRepository);
+  const userRepository = new PrismaUserRepository();
+  const getUnicoUsuarioUseCase = new GetUnicoUsuarioUseCase(igrejaRepository, userRepository);
 
-  return pegarUnicaIgrejaUseCase;
+  return getUnicoUsuarioUseCase;
 }
