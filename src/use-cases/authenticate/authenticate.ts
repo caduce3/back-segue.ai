@@ -1,9 +1,9 @@
 import { compare, hash } from "bcryptjs";
 import { InvalidCredentialsError } from "../@errors/invalid-credentials-error";
-import { Igreja, User } from "@prisma/client";
+import { Igreja, EquipeDirigente } from "@prisma/client";
 import { IgrejaRepository } from "@/repositories/igreja-repository";
 import { ErroContaInvativa } from "../@errors/erro-conta-inativa";
-import { UserRepository } from "@/repositories/user-repository";
+import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
 
 interface AuthenticateIgrejaRequest {
   email: string;
@@ -11,13 +11,13 @@ interface AuthenticateIgrejaRequest {
 }
 
 interface AuthenticateIgrejaResponse {
-  usuario: Igreja | User;
+  usuario: Igreja | EquipeDirigente;
 }
 
 export class AuthenticateIgrejaUseCase {
   constructor(
     private igrejaRepository: IgrejaRepository,
-    private userRepository: UserRepository
+    private equipeDirigenteRepository: EquipeDirigenteRepository
   ) {}
 
   async execute({
@@ -27,7 +27,7 @@ export class AuthenticateIgrejaUseCase {
     const igreja = await this.igrejaRepository.findIgrejaByEmail(email);
 
     if (!igreja) {
-      const user = await this.userRepository.findUserByEmail(email);
+      const user = await this.equipeDirigenteRepository.findUserEquipeDirigenteByEmail(email);
       if (!user) {
         throw new InvalidCredentialsError();
       } else {

@@ -65,26 +65,26 @@ model Transaction {
 
 // Modelo para Igreja
 model Igreja {
-  id          String        @id @default(uuid())
+  id          String            @id @default(uuid())
   nome        String
-  cnpj        String        @unique
-  email       String        @unique
+  cnpj        String            @unique
+  email       String            @unique
   senha       String
   telefone    String
   endereco    String
   cidade      String
   estado      String
   cep         String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  User        User[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  User        EquipeDirigente[]
   Transaction Transaction[]
-  status      Status        @default(ATIVO)
-  pasta       TipoPasta     @default(PAROQUIA)
+  status      Status            @default(ATIVO)
+  pasta       TipoPasta         @default(PAROQUIA)
 }
 
 // Modelo para usuarios da igreja
-model User {
+model EquipeDirigente {
   id        String    @id @default(uuid())
   nome      String
   email     String    @unique

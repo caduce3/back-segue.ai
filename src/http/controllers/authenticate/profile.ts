@@ -1,18 +1,18 @@
 import { UsuarioNaoExiste } from "@/use-cases/@errors/erro-usuario-nao-existe";
-import { makeGetUnicoUsuarioUseCase } from "@/use-cases/@factories/igreja/make-pegar-unica-igreja-use-case";
+import { makeGetProfileUseCase } from "@/use-cases/@factories/authenticate/make-pegar-profile-use-case";
 import { FastifyReply, FastifyRequest } from "fastify";
 
 export async function getProfile(request: FastifyRequest, reply: FastifyReply) {
   try {
-    const igrejaId = request.user.sub;
+    const profileId = request.user.sub;
 
-    const getIgrejaUseCase = makeGetUnicoUsuarioUseCase();
+    const getProfileUseCase = makeGetProfileUseCase();
 
-    const igreja = await getIgrejaUseCase.execute({
-      id: igrejaId,
+    const profile = await getProfileUseCase.execute({
+      id: profileId,
     });
 
-    return reply.status(200).send(igreja);
+    return reply.status(200).send(profile);
   } catch (error) {
     if (error instanceof UsuarioNaoExiste) {
       return reply.status(404).send({ message: error.message });

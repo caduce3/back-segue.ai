@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { InvalidCredentialsError } from "@/use-cases/@errors/invalid-credentials-error";
-import { makeAuthenticateIgrejaUseCase } from "@/use-cases/@factories/igreja/make-authenticate-use-case";
+import { makeAuthenticateIgrejaUseCase } from "@/use-cases/@factories/authenticate/make-authenticate-use-case";
 import { ErroContaInvativa } from "@/use-cases/@errors/erro-conta-inativa";
 
 export async function authenticateIgreja(

@@ -1,25 +1,25 @@
-import { Igreja, User } from "@prisma/client";
+import { Igreja, EquipeDirigente } from "@prisma/client";
 import { IgrejaRepository } from "@/repositories/igreja-repository";
-import { UserRepository } from "@/repositories/user-repository";
+import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
 import { UsuarioNaoExiste } from "../@errors/erro-usuario-nao-existe";
 
-interface GetUnicoUsuarioUseCaseRequest {
+interface GetProfileUseCaseRequest {
   id: string;
 }
 
-interface GetUnicoUsuarioUseCaseResponse {
-  usuario: Igreja | User;
+interface GetProfileUseCaseResponse {
+  usuario: Igreja | EquipeDirigente;
 }
 
-export class GetUnicoUsuarioUseCase {
+export class GetProfileUseCase {
   constructor(
     private igrejaRepository: IgrejaRepository,
-    private userRepository: UserRepository
+    private equipeDirigenteRepository: EquipeDirigenteRepository
   ) {}
 
   async execute({
     id,
-  }: GetUnicoUsuarioUseCaseRequest): Promise<GetUnicoUsuarioUseCaseResponse> {
+  }: GetProfileUseCaseRequest): Promise<GetProfileUseCaseResponse> {
     // Tenta encontrar o usuário na tabela Igreja
     const igreja = await this.igrejaRepository.pegarUnicaIgreja(id);
 
@@ -28,7 +28,7 @@ export class GetUnicoUsuarioUseCase {
     }
 
     // Se não encontrar na tabela Igreja, busca na tabela User
-    const usuario = await this.userRepository.pegarUnicoUser(id);
+    const usuario = await this.equipeDirigenteRepository.pegarUnicoUserEquipeDirigente(id);
 
     if (!usuario) {
       throw new UsuarioNaoExiste();
