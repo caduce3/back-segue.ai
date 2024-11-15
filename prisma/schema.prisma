@@ -67,8 +67,8 @@ model Transaction {
 model Igreja {
   id          String        @id @default(uuid())
   nome        String
-  cnpj        String
-  email       String
+  cnpj        String        @unique
+  email       String        @unique
   senha       String
   telefone    String
   endereco    String
@@ -79,7 +79,7 @@ model Igreja {
   updatedAt   DateTime      @updatedAt
   User        User[]
   Transaction Transaction[]
-  status      Status
+  status      Status        @default(ATIVO)
   pasta       TipoPasta     @default(PAROQUIA)
 }
 
@@ -87,7 +87,7 @@ model Igreja {
 model User {
   id        String    @id @default(uuid())
   nome      String
-  email     String
+  email     String    @unique
   senha     String
   igreja    Igreja    @relation(fields: [igrejaId], references: [id])
   igrejaId  String

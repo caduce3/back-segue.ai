@@ -116,4 +116,24 @@ export class PrismaIgrejaRepository implements IgrejaRepository {
 
     return igreja;
   }
+
+  async findIgrejaByEmail(email: string): Promise<Igreja | null> {
+    const igreja = await prisma.igreja.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    return igreja;
+  }
+
+  async findIgrejaByCnpj(cnpj: string): Promise<Igreja | null> {
+    const igreja = await prisma.igreja.findUnique({
+      where: {
+        cnpj,
+      },
+    });
+
+    return igreja;
+  }
 }
