@@ -11,7 +11,7 @@ export async function cadastrarIgreja(
 ) {
   const cadastrarIgrejaBodySchema = z.object({
     nome: z.string(),
-    cnpj: z.string(),
+    cnpj: z.string().min(14),
     email: z.string().email(),
     senha: z.string().min(6),
     telefone: z.string(),
