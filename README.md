@@ -2,6 +2,7 @@
 > 
 > ## Descrição
 > Esta é a documentação básica da API **back-segueai**, construída utilizando **Fastify**, **Prisma ORM** e outras bibliotecas auxiliares. A API foi desenvolvida com Node.js e TypeScript.
+> FrontEnd da aplicação: https://github.com/caduce3/front-segue.ai
 > 
 > ---
 > 
