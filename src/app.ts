@@ -5,6 +5,7 @@ import fastifyJwt from "@fastify/jwt";
 import fastifyCookie from "@fastify/cookie";
 import fastifyCors from "@fastify/cors";
 import { igrejaRoutes } from "./http/controllers/routes/igreja/igreja-routes";
+import { transactionRoutes } from "./http/controllers/routes/transaction/transaction-routes";
 
 export const app = fastify()
 
@@ -28,6 +29,7 @@ app.register(fastifyJwt, {
 
 app.register(fastifyCookie)
 app.register(igrejaRoutes)
+app.register(transactionRoutes)
 
 app.setErrorHandler((error, _request, reply) => {
     if(error instanceof ZodError) {
