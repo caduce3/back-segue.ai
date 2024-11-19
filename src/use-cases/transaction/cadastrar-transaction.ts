@@ -6,10 +6,7 @@ import {
   TipoTransacao,
   Transaction,
 } from "@prisma/client";
-import { IgrejaNaoExiste } from "../@errors/igreja/erro-igreja-nao-existe";
 import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
-import { ErroEquipeDirigenteNaoExiste } from "../@errors/equipeDirigente/erro-user-equipe-dirigente-nao-existe";
-import { ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja } from "../@errors/transaction/erro-deletar-transaction-sua-igreja";
 import { verificarAcessoIgreja } from "@/services/verificar-acesso-igreja";
 
 interface CadastrarTransactionRequest {
