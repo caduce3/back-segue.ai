@@ -6,20 +6,17 @@ import { ErroAoCarregarTransactions } from "../@errors/transaction/erro-carregar
 import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
 import { verificarAcessoIgreja } from "@/services/verificar-acesso-igreja";
 
-interface PegarTransactionRequest {
-  page: number;
+interface PegarUnicaTransactionRequest {
+  id: string;
   igrejaId: string;
   idUserEquipeDirigente: string;
 }
 
-interface PegarTransactionResponse {
-  transactionsList: Transaction[];
-  totalItens: number;
-  totalPages: number;
-  currentPage: number;
+interface PegarUnicaTransactionResponse {
+  transaction: Transaction;
 }
 
-export class PegarTransactionsUseCase {
+export class PegarUnicaTransactionUseCase {
   constructor(
     private transactionRepository: TransactionRepository,
     private igrejaRepository: IgrejaRepository,
@@ -27,13 +24,10 @@ export class PegarTransactionsUseCase {
   ) {}
 
   async execute({
-    page,
+    id,
     igrejaId,
     idUserEquipeDirigente,
-  }: PegarTransactionRequest): Promise<PegarTransactionResponse> {
-    if (page <= 0) page = 1;
-    const take = 10;
-
+  }: PegarUnicaTransactionRequest): Promise<PegarUnicaTransactionResponse> {
     await verificarAcessoIgreja(
       igrejaId,
       idUserEquipeDirigente,
@@ -41,27 +35,12 @@ export class PegarTransactionsUseCase {
       this.equipeDirigenteRepository
     );
 
-    const { transactions, totalCount } =
-      await this.transactionRepository.pegarTransactions(take, page, igrejaId);
-
-    if (!transactions || transactions.length === 0) {
-      return {
-        transactionsList: [],
-        totalItens: 0,
-        totalPages: 0,
-        currentPage: 0,
-      };
-    }
-
-    const totalPages = Math.ceil(totalCount / take);
-    if (totalPages === 0) throw new ErroAoCarregarTransactions();
-    if (page > totalPages) throw new ErroAoCarregarPagina();
+    const transaction =
+      await this.transactionRepository.findTransactionById(id);
+    if (!transaction) throw new ErroAoCarregarTransactions();
 
     return {
-      transactionsList: transactions,
-      totalItens: totalCount,
-      totalPages,
-      currentPage: page,
+      transaction,
     };
   }
 }

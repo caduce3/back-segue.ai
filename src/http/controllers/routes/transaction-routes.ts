@@ -5,6 +5,7 @@ import { verificarPasta } from "@/http/middlewares/verificar-pasta";
 import { pegarTransactions } from "../_transaction/pegar-transactions";
 import { deletarTransaction } from "../_transaction/deletar-transaction";
 import { atualizarTransaction } from "../_transaction/atualizar-transaction";
+import { pegarUnicaTransaction } from "../_transaction/pegar-unica-transaction";
 
 export async function transactionRoutes(app: FastifyInstance) {
   app.post(
@@ -27,7 +28,13 @@ export async function transactionRoutes(app: FastifyInstance) {
 
   app.put(
     "/atualizar_transaction",
-    { onRequest: [verifyJwt, verificarPasta(["FINANCAS", "PAROQUIA"])] },
+    { onRequest: [verifyJwt, verificarPasta(["FINANCAS"])] },
     atualizarTransaction
+  );
+
+  app.post(
+    "/pegar_unica_transaction",
+    { onRequest: [verifyJwt, verificarPasta(["FINANCAS", "PAROQUIA"])] },
+    pegarUnicaTransaction
   )
 }
