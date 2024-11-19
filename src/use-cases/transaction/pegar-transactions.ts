@@ -4,10 +4,14 @@ import { Transaction } from "@prisma/client";
 import { IgrejaNaoExiste } from "../@errors/igreja/erro-igreja-nao-existe";
 import { ErroAoCarregarPagina } from "../@errors/erro-carregar-pagina";
 import { ErroAoCarregarTransactions } from "../@errors/transaction/erro-carregar-transaction";
+import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
+import { ErroEquipeDirigenteNaoExiste } from "../@errors/equipeDirigente/erro-user-equipe-dirigente-nao-existe";
+import { ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja } from "../@errors/transaction/erro-deletar-transaction-sua-igreja";
 
 interface PegarTransactionRequest {
   page: number;
   igrejaId: string;
+  idUserEquipeDirigente: string;
 }
 
 interface PegarTransactionResponse {
@@ -20,12 +24,14 @@ interface PegarTransactionResponse {
 export class PegarTransactionsUseCase {
   constructor(
     private transactionRepository: TransactionRepository,
-    private igrejaRepository: IgrejaRepository
+    private igrejaRepository: IgrejaRepository,
+    private equipeDirigenteRepository: EquipeDirigenteRepository
   ) {}
 
   async execute({
     page,
     igrejaId,
+    idUserEquipeDirigente,
   }: PegarTransactionRequest): Promise<PegarTransactionResponse> {
     if (page <= 0) page = 1;
     const take = 10;
@@ -33,6 +39,17 @@ export class PegarTransactionsUseCase {
     const verifyIgrejaExist =
       await this.igrejaRepository.findIgrejaById(igrejaId);
     if (!verifyIgrejaExist) throw new IgrejaNaoExiste();
+
+    const verifyUserEquipeDirigenteExist =
+      await this.equipeDirigenteRepository.findUserEquipeDirigenteById(
+        idUserEquipeDirigente
+      );
+
+    if (!verifyUserEquipeDirigenteExist)
+      throw new ErroEquipeDirigenteNaoExiste();
+
+    if (verifyIgrejaExist.id !== verifyUserEquipeDirigenteExist.igrejaId)
+      throw new ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja();
 
     const { transactions, totalCount } =
       await this.transactionRepository.pegarTransactions(take, page, igrejaId);

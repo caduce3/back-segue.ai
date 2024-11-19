@@ -12,9 +12,10 @@ export async function pegarTransactions(
   const pegarTransactionsBodySchema = z.object({
     page: z.number().positive(),
     igrejaId: z.string(),
+    idUserEquipeDirigente: z.string(),
   });
 
-  const { page, igrejaId } = pegarTransactionsBodySchema.parse(request.body);
+  const { page, igrejaId, idUserEquipeDirigente } = pegarTransactionsBodySchema.parse(request.body);
 
   try {
     const pegarTransactionsUseCase = makePegarTransactionsUseCase();
@@ -23,6 +24,7 @@ export async function pegarTransactions(
       await pegarTransactionsUseCase.execute({
         page,
         igrejaId,
+        idUserEquipeDirigente
       });
 
     return reply.status(200).send({
