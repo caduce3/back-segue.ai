@@ -10,6 +10,7 @@ import { IgrejaNaoExiste } from "../@errors/igreja/erro-igreja-nao-existe";
 import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
 import { ErroEquipeDirigenteNaoExiste } from "../@errors/equipeDirigente/erro-user-equipe-dirigente-nao-existe";
 import { ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja } from "../@errors/transaction/erro-deletar-transaction-sua-igreja";
+import { verificarAcessoIgreja } from "@/services/verificar-acesso-igreja";
 
 interface CadastrarTransactionRequest {
   nome: string;
@@ -45,18 +46,12 @@ export class CadastrarTransactionUseCase {
     igrejaId,
     idUserEquipeDirigente,
   }: CadastrarTransactionRequest): Promise<CadastrarTransactionResponse> {
-    const verifyIgrejaExist =
-      await this.igrejaRepository.findIgrejaById(igrejaId);
-    if (!verifyIgrejaExist) throw new IgrejaNaoExiste();
-
-    const equiqueDirigenteExiste =
-      await this.equipeDirigenteRepository.findUserEquipeDirigenteById(
-        idUserEquipeDirigente
-      );
-    if (!equiqueDirigenteExiste) throw new ErroEquipeDirigenteNaoExiste();
-
-    if (verifyIgrejaExist.id !== equiqueDirigenteExiste.igrejaId)
-      throw new ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja();
+    await verificarAcessoIgreja(
+      igrejaId,
+      idUserEquipeDirigente,
+      this.igrejaRepository,
+      this.equipeDirigenteRepository
+    );
 
     const transaction = await this.transactionRepository.registrarTransaction({
       nome,
