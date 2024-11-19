@@ -42,7 +42,7 @@ export async function cadastrarTransaction(
     ]),
     date: z.string(),
     igrejaId: z.string(),
-    idUserEquiqueDirigente: z.string(),
+    idUserEquipeDirigente: z.string(),
   });
 
   const {
@@ -54,7 +54,7 @@ export async function cadastrarTransaction(
     metodoPagamento,
     date,
     igrejaId,
-    idUserEquiqueDirigente,
+    idUserEquipeDirigente,
   } = cadastrarTransactionBodySchema.parse(request.body);
 
   try {
@@ -69,7 +69,7 @@ export async function cadastrarTransaction(
       metodoPagamento,
       date,
       igrejaId,
-      idUserEquiqueDirigente,
+      idUserEquipeDirigente,
     });
   } catch (error) {
     if (

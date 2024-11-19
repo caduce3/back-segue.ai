@@ -20,7 +20,7 @@ interface CadastrarTransactionRequest {
   metodoPagamento: MetodoPagamentoTransacao;
   date: string;
   igrejaId: string;
-  idUserEquiqueDirigente: string;
+  idUserEquipeDirigente: string;
 }
 
 interface CadastrarTransactionResponse {
@@ -43,7 +43,7 @@ export class CadastrarTransactionUseCase {
     metodoPagamento,
     date,
     igrejaId,
-    idUserEquiqueDirigente,
+    idUserEquipeDirigente,
   }: CadastrarTransactionRequest): Promise<CadastrarTransactionResponse> {
     const verifyIgrejaExist =
       await this.igrejaRepository.findIgrejaById(igrejaId);
@@ -51,7 +51,7 @@ export class CadastrarTransactionUseCase {
 
     const equiqueDirigenteExiste =
       await this.equipeDirigenteRepository.findUserEquipeDirigenteById(
-        idUserEquiqueDirigente
+        idUserEquipeDirigente
       );
     if (!equiqueDirigenteExiste) throw new ErroEquipeDirigenteNaoExiste();
 
