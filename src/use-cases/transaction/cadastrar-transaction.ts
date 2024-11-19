@@ -7,6 +7,9 @@ import {
   Transaction,
 } from "@prisma/client";
 import { IgrejaNaoExiste } from "../@errors/igreja/erro-igreja-nao-existe";
+import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
+import { ErroEquipeDirigenteNaoExiste } from "../@errors/equipeDirigente/erro-user-equipe-dirigente-nao-existe";
+import { ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja } from "../@errors/transaction/erro-deletar-transaction-sua-igreja";
 
 interface CadastrarTransactionRequest {
   nome: string;
@@ -17,6 +20,7 @@ interface CadastrarTransactionRequest {
   metodoPagamento: MetodoPagamentoTransacao;
   date: string;
   igrejaId: string;
+  idUserEquiqueDirigente: string;
 }
 
 interface CadastrarTransactionResponse {
@@ -26,7 +30,8 @@ interface CadastrarTransactionResponse {
 export class CadastrarTransactionUseCase {
   constructor(
     private transactionRepository: TransactionRepository,
-    private igrejaRepository: IgrejaRepository
+    private igrejaRepository: IgrejaRepository,
+    private equipeDirigenteRepository: EquipeDirigenteRepository
   ) {}
 
   async execute({
@@ -38,10 +43,20 @@ export class CadastrarTransactionUseCase {
     metodoPagamento,
     date,
     igrejaId,
+    idUserEquiqueDirigente,
   }: CadastrarTransactionRequest): Promise<CadastrarTransactionResponse> {
-
-    const verifyIgrejaExist = await this.igrejaRepository.findIgrejaById(igrejaId);
+    const verifyIgrejaExist =
+      await this.igrejaRepository.findIgrejaById(igrejaId);
     if (!verifyIgrejaExist) throw new IgrejaNaoExiste();
+
+    const equiqueDirigenteExiste =
+      await this.equipeDirigenteRepository.findUserEquipeDirigenteById(
+        idUserEquiqueDirigente
+      );
+    if (!equiqueDirigenteExiste) throw new ErroEquipeDirigenteNaoExiste();
+
+    if (verifyIgrejaExist.id !== equiqueDirigenteExiste.igrejaId)
+      throw new ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja();
 
     const transaction = await this.transactionRepository.registrarTransaction({
       nome,

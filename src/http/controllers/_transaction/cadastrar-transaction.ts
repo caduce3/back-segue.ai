@@ -1,4 +1,6 @@
+import { ErroEquipeDirigenteNaoExiste } from "@/use-cases/@errors/equipeDirigente/erro-user-equipe-dirigente-nao-existe";
 import { IgrejaNaoExiste } from "@/use-cases/@errors/igreja/erro-igreja-nao-existe";
+import { ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja } from "@/use-cases/@errors/transaction/erro-deletar-transaction-sua-igreja";
 import { makeCadastrarTransactionUseCase } from "@/use-cases/@factories/transaction/make-cadastrar-transaction-use-case";
 import {
   CategoriaTransacao,
@@ -40,6 +42,7 @@ export async function cadastrarTransaction(
     ]),
     date: z.string(),
     igrejaId: z.string(),
+    idUserEquiqueDirigente: z.string(),
   });
 
   const {
@@ -51,6 +54,7 @@ export async function cadastrarTransaction(
     metodoPagamento,
     date,
     igrejaId,
+    idUserEquiqueDirigente,
   } = cadastrarTransactionBodySchema.parse(request.body);
 
   try {
@@ -65,9 +69,14 @@ export async function cadastrarTransaction(
       metodoPagamento,
       date,
       igrejaId,
+      idUserEquiqueDirigente,
     });
   } catch (error) {
-    if (error instanceof IgrejaNaoExiste) {
+    if (
+      error instanceof IgrejaNaoExiste ||
+      error instanceof ErroEquipeDirigenteNaoExiste ||
+      error instanceof ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja
+    ) {
       return reply.status(409).send({ message: error.message });
     }
     throw error;
