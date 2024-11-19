@@ -56,11 +56,11 @@ export class PrismaTransactionRepository implements TransactionRepository {
       include: {
         igreja: {
           select: {
-            id: true,
-            nome: true,
-            email: true, 
-          }
-        }
+            id: true;
+            nome: true;
+            email: true;
+          };
+        };
       };
     }>[];
     totalCount: number;
@@ -100,9 +100,9 @@ export class PrismaTransactionRepository implements TransactionRepository {
           select: {
             id: true,
             nome: true,
-            email: true, 
-          }
-        }
+            email: true,
+          },
+        },
       },
       take,
       skip,
@@ -112,5 +112,72 @@ export class PrismaTransactionRepository implements TransactionRepository {
       transactions,
       totalCount,
     };
+  }
+
+  async totalDepositos(
+    idIgreja: string,
+    dateInit: Date,
+    dateFinish: Date
+  ): Promise<number> {
+    const totalDepositos = await prisma.transaction.aggregate({
+      _sum: {
+        valor: true,
+      },
+      where: {
+        igrejaId: idIgreja,
+        tipo: "DEPOSITO",
+        date: {
+          gte: dateInit,
+          lte: dateFinish,
+        },
+      },
+    });
+
+    // Retorna o total ou 0 caso seja undefined
+    return totalDepositos._sum.valor || 0;
+  }
+
+  async totalInvestimentos(
+    idIgreja: string,
+    dateInit: Date,
+    dateFinish: Date
+  ): Promise<number> {
+    const totalInvestimentos = await prisma.transaction.aggregate({
+      _sum: {
+        valor: true,
+      },
+      where: {
+        igrejaId: idIgreja,
+        tipo: "INVESTIMENTO",
+        date: {
+          gte: dateInit,
+          lte: dateFinish,
+        },
+      },
+    });
+
+    return totalInvestimentos._sum.valor || 0;
+  }
+
+  async totalDespesas(
+    idIgreja: string,
+    dateInit: Date,
+    dateFinish: Date
+  ): Promise<number> {
+    const totalDespesas = await prisma.transaction.aggregate({
+      _sum: {
+        valor: true,
+      },
+      where: {
+        igrejaId: idIgreja,
+        tipo: "DESPESA",
+        date: {
+          gte: dateInit,
+          lte: dateFinish,
+        },
+      },
+    });
+
+    return totalDespesas._sum.valor || 0;
   }
 }

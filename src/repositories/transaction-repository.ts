@@ -16,4 +16,7 @@ export interface TransactionRepository {
             }
         }
     }>[]; totalCount: number, }>
+    totalDepositos(idIgreja: string, dateInit: Date, dateFinish: Date): Promise<number>
+    totalInvestimentos(idIgreja: string, dateInit: Date, dateFinish: Date): Promise<number>
+    totalDespesas(idIgreja: string, dateInit: Date, dateFinish: Date): Promise<number>
 }

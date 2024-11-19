@@ -1,7 +1,6 @@
 import { IgrejaRepository } from "@/repositories/igreja-repository";
 import { TransactionRepository } from "@/repositories/transaction-repository";
 import { Transaction } from "@prisma/client";
-import { ErroAoCarregarPagina } from "../@errors/erro-carregar-pagina";
 import { ErroAoCarregarTransactions } from "../@errors/transaction/erro-carregar-transaction";
 import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
 import { verificarAcessoIgreja } from "@/services/verificar-acesso-igreja";
