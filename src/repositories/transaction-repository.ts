@@ -7,7 +7,13 @@ export interface TransactionRepository {
     atualizarTransaction(id: string, data: Prisma.TransactionUncheckedUpdateInput ): Promise<Transaction>
     pegarTransactions(take: number, page: number, igrejaId: string): Promise<{ transactions: Prisma.TransactionGetPayload<{
         include: {
-            igreja: true
+            igreja: {
+                select: {
+                    id: true,
+                    nome: true,
+                    email: true
+                }
+            }
         }
     }>[]; totalCount: number, }>
 }

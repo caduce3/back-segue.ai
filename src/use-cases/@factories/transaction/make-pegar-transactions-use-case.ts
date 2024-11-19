@@ -1,14 +1,14 @@
 import { PrismaTransactionRepository } from "@/repositories/prisma/prisma-transaction-repository";
-import { CadastrarTransactionUseCase } from "@/use-cases/transaction/cadastrar-transaction";
+import { PegarTransactionsUseCase } from "@/use-cases/transaction/pegar-transactions";
 import { PrismaIgrejaRepository } from "@/repositories/prisma/prisma-igreja-repository";
 
-export function makeCadastrarTransactionUseCase() {
+export function makePegarTransactionsUseCase() {
   const transactionRepository = new PrismaTransactionRepository();
   const igrejaRepository = new PrismaIgrejaRepository();
-  const cadastrarTransactionUseCase = new CadastrarTransactionUseCase(
+  const pegarTransactionsUseCase = new PegarTransactionsUseCase(
     transactionRepository,
     igrejaRepository
   );
 
-  return cadastrarTransactionUseCase;
+  return pegarTransactionsUseCase;
 }

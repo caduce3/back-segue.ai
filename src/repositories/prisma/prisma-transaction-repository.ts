@@ -54,7 +54,13 @@ export class PrismaTransactionRepository implements TransactionRepository {
   ): Promise<{
     transactions: Prisma.TransactionGetPayload<{
       include: {
-        igreja: true;
+        igreja: {
+          select: {
+            id: true,
+            nome: true,
+            email: true, 
+          }
+        }
       };
     }>[];
     totalCount: number;
@@ -90,7 +96,13 @@ export class PrismaTransactionRepository implements TransactionRepository {
         nome: "asc",
       },
       include: {
-        igreja: true,
+        igreja: {
+          select: {
+            id: true,
+            nome: true,
+            email: true, 
+          }
+        }
       },
       take,
       skip,
