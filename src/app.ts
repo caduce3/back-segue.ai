@@ -6,6 +6,7 @@ import fastifyCookie from "@fastify/cookie";
 import fastifyCors from "@fastify/cors";
 import { igrejaRoutes } from "./http/controllers/routes/igreja-routes";
 import { transactionRoutes } from "./http/controllers/routes/transaction-routes";
+import { equipeDirigenteRoutes } from "./http/controllers/routes/equipe-dirigente-routes";
 
 export const app = fastify();
 
@@ -30,7 +31,7 @@ app.register(fastifyJwt, {
 app.register(fastifyCookie);
 app.register(igrejaRoutes);
 app.register(transactionRoutes);
-
+app.register(equipeDirigenteRoutes);
 app.setErrorHandler((error, _request, reply) => {
   if (error instanceof ZodError) {
     return reply

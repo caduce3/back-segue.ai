@@ -17,7 +17,7 @@ export async function transactionRoutes(app: FastifyInstance) {
 
   app.post(
     "/pegar_transactions",
-    { onRequest: [verifyJwt, verificarPasta(["FINANCAS"])] },
+    { onRequest: [verifyJwt, verificarPasta(["FINANCAS", "PAROQUIA"])] },
     pegarTransactions
   );
 
@@ -35,7 +35,7 @@ export async function transactionRoutes(app: FastifyInstance) {
 
   app.post(
     "/pegar_unica_transaction",
-    { onRequest: [verifyJwt, verificarPasta(["FINANCAS"])] },
+    { onRequest: [verifyJwt, verificarPasta(["FINANCAS", "PAROQUIA"])] },
     pegarUnicaTransaction
   )
 
