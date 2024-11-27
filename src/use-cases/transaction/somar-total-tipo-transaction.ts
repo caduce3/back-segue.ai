@@ -61,7 +61,7 @@ export class SomarTotalTipoTransactionUseCase {
       dataFinal
     );
 
-    const balancoGeral = totalDepositos - (totalInvestimentos - totalDespesas);
+    const balancoGeral = totalDepositos - totalInvestimentos - totalDespesas;
 
     return {
       totalDepositos,
