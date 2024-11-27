@@ -66,7 +66,7 @@ export class PrismaIgrejaRepository implements IgrejaRepository {
     const igrejas = await prisma.igreja.findMany({
       where: whereClause,
       orderBy: {
-        createdAt: "asc",
+        createdAt: "desc",
       },
       take,
       skip,

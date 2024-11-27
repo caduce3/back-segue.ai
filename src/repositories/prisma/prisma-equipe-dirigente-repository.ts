@@ -102,7 +102,7 @@ export class PrismaEquipeDirigenteRepository
     const usersEquipeDirigente = await prisma.equipeDirigente.findMany({
       where: whereClause,
       orderBy: {
-        nome: "asc",
+        nome: "desc",
       },
       include: {
         igreja: true,

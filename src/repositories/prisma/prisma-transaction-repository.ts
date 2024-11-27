@@ -93,7 +93,7 @@ export class PrismaTransactionRepository implements TransactionRepository {
     const transactions = await prisma.transaction.findMany({
       where: whereClause,
       orderBy: {
-        nome: "asc",
+        nome: "desc",
       },
       include: {
         igreja: {
