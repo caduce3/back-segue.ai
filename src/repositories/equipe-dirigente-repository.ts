@@ -6,7 +6,7 @@ export interface EquipeDirigenteRepository {
     findUserEquipeDirigenteById(id: string): Promise<EquipeDirigente | null>
     deletarUserEquipeDirigente(id: string): Promise<boolean>
     atualizarUserEquipeDirigente(id: string, data: Prisma.EquipeDirigenteUncheckedUpdateInput ): Promise<EquipeDirigente>
-    pegarUsersEquipeDirigente(take: number, page: number, nome?: string, telefone?: string, email?: string): Promise<{ usersEquipeDirigente: Prisma.EquipeDirigenteGetPayload<{
+    pegarUsersEquipeDirigente(take: number, page: number, igrejaId: string): Promise<{ usersEquipeDirigente: Prisma.EquipeDirigenteGetPayload<{
         include: {
             igreja: true
         }

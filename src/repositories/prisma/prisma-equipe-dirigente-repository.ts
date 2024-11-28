@@ -66,9 +66,7 @@ export class PrismaEquipeDirigenteRepository
   async pegarUsersEquipeDirigente(
     take: number,
     page: number,
-    nome?: string,
-    telefone?: string,
-    email?: string
+    igrejaId: string
   ): Promise<{
     usersEquipeDirigente: Prisma.EquipeDirigenteGetPayload<{
       include: {
@@ -82,14 +80,17 @@ export class PrismaEquipeDirigenteRepository
     // Construindo as condições dinamicamente
     const conditions: Prisma.EquipeDirigenteWhereInput[] = [];
 
-    if (nome)
-      conditions.push({ nome: { contains: nome, mode: "insensitive" } });
-    if (telefone)
-      conditions.push({
-        telefone: { contains: telefone, mode: "insensitive" },
-      });
-    if (email)
-      conditions.push({ email: { contains: email, mode: "insensitive" } });
+    // if (nome)
+    //   conditions.push({ nome: { contains: nome, mode: "insensitive" } });
+    // if (telefone)
+    //   conditions.push({
+    //     telefone: { contains: telefone, mode: "insensitive" },
+    //   });
+    // if (email)
+    //   conditions.push({ email: { contains: email, mode: "insensitive" } });
+
+    //adicionar a condição do igrejaId
+    conditions.push({ igrejaId: igrejaId });
 
     // Garantindo que só passemos o AND se tivermos condições
     const whereClause: Prisma.EquipeDirigenteWhereInput =
