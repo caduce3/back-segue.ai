@@ -7,6 +7,7 @@ import { deletarTransaction } from "../_transaction/deletar-transaction";
 import { atualizarTransaction } from "../_transaction/atualizar-transaction";
 import { pegarUnicaTransaction } from "../_transaction/pegar-unica-transaction";
 import { somarValorTotalTipoTransaction } from "../_transaction/somar-valor-total-tipo-transaction";
+import { gastosPorCategoriaTransaction } from "../_transaction/gastos-por-categoria-transaction";
 
 export async function transactionRoutes(app: FastifyInstance) {
   app.post(
@@ -43,5 +44,11 @@ export async function transactionRoutes(app: FastifyInstance) {
     "/somar_valor_total_tipo_transaction",
     { onRequest: [verifyJwt, verificarPasta(["FINANCAS", "PAROQUIA"])] },
     somarValorTotalTipoTransaction
+  )
+
+  app.post(
+    "/gastos_por_categoria",
+    { onRequest: [verifyJwt, verificarPasta(["FINANCAS", "PAROQUIA"])] },
+    gastosPorCategoriaTransaction
   )
 }
