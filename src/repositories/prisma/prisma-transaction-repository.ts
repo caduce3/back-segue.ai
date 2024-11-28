@@ -209,6 +209,9 @@ export class PrismaTransactionRepository implements TransactionRepository {
       }
     });
 
+    //ordenar do maior gasto para o menor
+    gastosPorCategoriaComPorcentagem.sort((a, b) => b.total - a.total);
+
     return gastosPorCategoriaComPorcentagem;
   }
 }
