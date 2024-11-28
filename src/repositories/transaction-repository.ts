@@ -19,4 +19,5 @@ export interface TransactionRepository {
     totalDepositos(idIgreja: string, dateInit: Date, dateFinish: Date): Promise<number>
     totalInvestimentos(idIgreja: string, dateInit: Date, dateFinish: Date): Promise<number>
     totalDespesas(idIgreja: string, dateInit: Date, dateFinish: Date): Promise<number>
+    gastosPorCategoria(idIgreja: string, dateInit: Date, dateFinish: Date): Promise<{categoria: string, total: number, porcentagem: number}[]>
 }

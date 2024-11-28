@@ -180,4 +180,35 @@ export class PrismaTransactionRepository implements TransactionRepository {
 
     return totalDespesas._sum.valor || 0;
   }
+
+  async gastosPorCategoria(idIgreja: string, dateInit: Date, dateFinish: Date): Promise<{ categoria: string; total: number; porcentagem: number; }[]> {
+
+    const gastosPorCategoria = await prisma.transaction.groupBy({
+      by: ['categoria'],
+      _sum: {
+        valor: true
+      },
+      where: {
+        igrejaId: idIgreja,
+        tipo: "DESPESA",
+        date: {
+          gte: dateInit,
+          lte: dateFinish,
+        },
+      }
+    });
+
+    const totalGastos = gastosPorCategoria.reduce((acc, curr) => acc + (curr._sum.valor || 0), 0);
+
+    const gastosPorCategoriaComPorcentagem = gastosPorCategoria.map((gasto) => {
+      const porcentagem = ((gasto._sum.valor || 0) / totalGastos) * 100;
+      return {
+        categoria: gasto.categoria,
+        total: gasto._sum.valor || 0,
+        porcentagem: porcentagem
+      }
+    });
+
+    return gastosPorCategoriaComPorcentagem;
+  }
 }
