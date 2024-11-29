@@ -13,12 +13,20 @@ export async function verificarAcessoIgreja(
   const verifyIgrejaExist = await igrejaRepository.findIgrejaById(igrejaId);
   if (!verifyIgrejaExist) throw new IgrejaNaoExiste();
 
+  if (igrejaId === idUserEquipeDirigente) {
+    return {
+      verifyIgrejaExist,
+      verifyUserEquipeDirigenteExist: {
+        igrejaId,
+      },
+    };
+  }
+
   const verifyUserEquipeDirigenteExist =
     await equipeDirigenteRepository.findUserEquipeDirigenteById(
       idUserEquipeDirigente
     );
-  if (!verifyUserEquipeDirigenteExist)
-    throw new ErroEquipeDirigenteNaoExiste();
+  if (!verifyUserEquipeDirigenteExist) throw new ErroEquipeDirigenteNaoExiste();
 
   if (verifyIgrejaExist.id !== verifyUserEquipeDirigenteExist.igrejaId)
     throw new ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja();
