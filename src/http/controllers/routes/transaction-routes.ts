@@ -18,7 +18,9 @@ export async function transactionRoutes(app: FastifyInstance) {
 
   app.post(
     "/pegar_transactions",
-    { onRequest: [verifyJwt, verificarPasta(["FINANCAS", "PAROQUIA", "PADRE"])] },
+    {
+      onRequest: [verifyJwt, verificarPasta(["FINANCAS", "PAROQUIA", "PADRE"])],
+    },
     pegarTransactions
   );
 
@@ -36,19 +38,23 @@ export async function transactionRoutes(app: FastifyInstance) {
 
   app.post(
     "/pegar_unica_transaction",
-    { onRequest: [verifyJwt, verificarPasta(["FINANCAS", "PAROQUIA", "PADRE"])] },
+    {
+      onRequest: [verifyJwt, verificarPasta(["FINANCAS", "PAROQUIA", "PADRE"])],
+    },
     pegarUnicaTransaction
-  )
+  );
 
   app.post(
     "/somar_valor_total_tipo_transaction",
-    { onRequest: [verifyJwt, verificarPasta(["FINANCAS", "PAROQUIA", "PADRE"])] },
+    { onRequest: [verifyJwt] },
     somarValorTotalTipoTransaction
-  )
+  );
 
   app.post(
     "/gastos_por_categoria",
-    { onRequest: [verifyJwt, verificarPasta(["FINANCAS", "PAROQUIA", "PADRE"])] },
+    {
+      onRequest: [verifyJwt],
+    },
     gastosPorCategoriaTransaction
-  )
+  );
 }

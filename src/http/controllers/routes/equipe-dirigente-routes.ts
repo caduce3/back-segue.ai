@@ -15,13 +15,13 @@ export async function equipeDirigenteRoutes(app: FastifyInstance) {
 
   app.post(
     "/pegar_equipe_dirigente",
-    { onRequest: [verifyJwt, verificarPasta(["FINANCAS", "PAROQUIA", "PADRE"])] },
+    { onRequest: [verifyJwt] },
     pegarUsersEquipeDirigente
   );
 
   app.post(
     "/deletar_user_equipe_dirigente",
-    { onRequest: [verifyJwt, verificarPasta(["FINANCAS", "PAROQUIA", "PADRE"])] },
+    { onRequest: [verifyJwt, verificarPasta(["PAROQUIA", "PADRE"])] },
     deletarUserEquipeDirigente
   );
 }
