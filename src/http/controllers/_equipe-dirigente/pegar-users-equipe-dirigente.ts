@@ -5,6 +5,7 @@ import { IgrejaNaoExiste } from "@/use-cases/@errors/igreja/erro-igreja-nao-exis
 import { ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja } from "@/use-cases/@errors/transaction/erro-deletar-transaction-sua-igreja";
 import { makePegarUsersEquipeDirigenteUseCase } from "@/use-cases/@factories/equipe-dirigente/make-pegar-users-equipe-dirigente-use-case";
 import { ErroAoCarregarUsersEquipeDirigente } from "@/use-cases/@errors/equipeDirigente/erro-carregar-users-equipe-dirigente";
+import { ErroEquipeDirigenteNaoExiste } from "@/use-cases/@errors/equipeDirigente/erro-user-equipe-dirigente-nao-existe";
 
 export async function pegarUsersEquipeDirigente(
   request: FastifyRequest,
@@ -41,7 +42,8 @@ export async function pegarUsersEquipeDirigente(
       error instanceof ErroAoCarregarUsersEquipeDirigente ||
       error instanceof ErroAoCarregarPagina ||
       error instanceof IgrejaNaoExiste ||
-      error instanceof ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja
+      error instanceof ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja ||
+      error instanceof ErroEquipeDirigenteNaoExiste
     ) {
       return reply.status(409).send({ message: error.message });
     }

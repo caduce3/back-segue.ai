@@ -8,7 +8,13 @@ export interface EquipeDirigenteRepository {
     atualizarUserEquipeDirigente(id: string, data: Prisma.EquipeDirigenteUncheckedUpdateInput ): Promise<EquipeDirigente>
     pegarUsersEquipeDirigente(take: number, page: number, igrejaId: string): Promise<{ usersEquipeDirigente: Prisma.EquipeDirigenteGetPayload<{
         include: {
-            igreja: true
+            igreja: {
+                select: {
+                    id: true,
+                    nome: true,
+                    email: true
+                }
+            }
         }
     }>[]; totalCount: number, }>
     pegarUnicoUserEquipeDirigente(id: string): Promise<EquipeDirigente | null>

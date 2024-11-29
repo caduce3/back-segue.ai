@@ -70,7 +70,13 @@ export class PrismaEquipeDirigenteRepository
   ): Promise<{
     usersEquipeDirigente: Prisma.EquipeDirigenteGetPayload<{
       include: {
-        igreja: true;
+        igreja: {
+          select: {
+            id: true;
+            nome: true;
+            email: true;
+          };
+        };
       };
     }>[];
     totalCount: number;
@@ -106,7 +112,13 @@ export class PrismaEquipeDirigenteRepository
         nome: "desc",
       },
       include: {
-        igreja: true,
+        igreja: {
+          select: {
+            id: true,
+            nome: true,
+            email: true,
+          },
+        },
       },
       take,
       skip,
