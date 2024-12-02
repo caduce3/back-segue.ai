@@ -47,6 +47,69 @@ enum MetodoPagamentoTransacao {
   OUTRO
 }
 
+enum Escolaridade {
+  ENSINO_FUNDAMENTAL
+  ENSINO_FUNDAMENTAL_INCOMPLETO
+  ENSINO_MEDIO
+  ENSINO_MEDIO_INCOMPLETO
+  ENSINO_SUPERIOR_INCOMPLETO
+  ENSINO_SUPERIOR_COMPLETO
+  POS_GRADUACAO
+  MESTRADO
+  DOUTORADO
+  POS_DOUTORADO
+}
+
+enum Sacramentos {
+  BATISMO
+  CRISMA
+  EUCARISTIA
+  NENHUM
+}
+
+enum Pastoral {
+  CATEQUESE
+  LITURGIA
+  MUSICA
+  JOVENS
+  FAMILIA
+  SAUDE
+  COMUNICACAO
+  CARIDADE
+  POVO_DA_RUA
+  OUTRO
+}
+
+enum Equipes {
+  ANIMACAO
+  VIGILIA_PAROQUIAL
+  LITURGIA
+  CANTO
+  ESTACIONAMENTO
+  TAXI
+  LANCHE
+  COZINHA
+  SALA
+  FAXINA
+  ED_PALESTRA
+  ED_POS
+  ED_MONTAGEM
+  ED_FINANCAS
+  ED_FICHAS
+}
+
+enum FuncaoEquipe {
+  COORDENADOR
+  EQUIPISTA
+  ED
+}
+
+enum AvaliacaoEquipe {
+  NEGATIVO
+  NORMAL
+  POSITIVO
+}
+
 // Modelo para transações
 model Transaction {
   id              String                   @id @default(uuid())
@@ -61,6 +124,47 @@ model Transaction {
   updatedAt       DateTime                 @updatedAt
   igreja          Igreja                   @relation(fields: [igrejaId], references: [id])
   igrejaId        String
+}
+
+model Ficha {
+  id                   String        @id @default(uuid())
+  nomePastaFichas      String
+  dataRecebimento      DateTime
+  nomeJovem            String
+  telefone             String
+  Endereco             String
+  dataNascimento       DateTime
+  Naturalidade         String
+  FiliacaoPai          String
+  FiliacaoMae          String
+  Escolaridade         Escolaridade
+  Religiao             String?
+  IgrejaFrequenta      String?
+  Sacramentos          Sacramentos
+  Pastoral             Pastoral
+  NomeConvidadoPor     String?
+  TelefoneConvidadoPor String?
+  EnderecoConvidadoPor String?
+  Observacoes          String?
+  AnoEncontro          String
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+  igreja               Igreja        @relation(fields: [igrejaId], references: [id])
+  igrejaId             String
+  FichaEquipe          FichaEquipe[]
+}
+
+model FichaEquipe {
+  id          String          @id @default(uuid())
+  equipe      Equipes
+  ano         String
+  funcao      FuncaoEquipe
+  avaliacao   AvaliacaoEquipe
+  observacoes String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  ficha       Ficha           @relation(fields: [fichaId], references: [id])
+  fichaId     String
 }
 
 // Modelo para Igreja
@@ -81,6 +185,7 @@ model Igreja {
   Transaction Transaction[]
   status      Status            @default(ATIVO)
   pasta       TipoPasta         @default(PAROQUIA)
+  Fichas      Ficha[]
 }
 
 // Modelo para usuarios da igreja
