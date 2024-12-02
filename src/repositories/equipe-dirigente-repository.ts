@@ -17,5 +17,4 @@ export interface EquipeDirigenteRepository {
             }
         }
     }>[]; totalCount: number, }>
-    pegarUnicoUserEquipeDirigente(id: string): Promise<EquipeDirigente | null>
 }
