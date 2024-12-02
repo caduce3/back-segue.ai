@@ -31,11 +31,24 @@ export async function pegarUsersEquipeDirigente(
         idUserEquipeDirigente,
       });
 
+    const equipeDirigenteListCleaned = equipeDirigenteList.map((user) => ({
+      id: user.id,
+      nome: user.nome,
+      email: user.email,
+      telefone: user.telefone,
+      ano: user.ano,
+      status: user.status,
+      igrejaId: user.igrejaId,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      pasta: user.pasta
+    }));
+
     return reply.status(200).send({
       totalItens,
       totalPages,
       currentPage: page,
-      equipeDirigenteList,
+      equipeDirigenteList: equipeDirigenteListCleaned,
     });
   } catch (error) {
     if (
