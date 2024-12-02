@@ -34,7 +34,7 @@ export class PrismaEquipeDirigenteRepository
       },
     });
 
-    return user;
+    return user
   }
 
   async deletarUserEquipeDirigente(id: string): Promise<boolean> {
@@ -128,17 +128,5 @@ export class PrismaEquipeDirigenteRepository
       usersEquipeDirigente,
       totalCount,
     };
-  }
-
-  async pegarUnicoUserEquipeDirigente(
-    id: string
-  ): Promise<EquipeDirigente | null> {
-    const user = await prisma.equipeDirigente.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    return user;
   }
 }
