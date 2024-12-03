@@ -143,23 +143,24 @@ model Ficha {
   nomePastaFichas      String
   dataRecebimento      DateTime
   nomeJovem            String
+  email                String        @unique
   telefone             String
-  Endereco             String
+  endereco             String
   dataNascimento       DateTime
-  Naturalidade         String
-  FiliacaoPai          String
-  FiliacaoMae          String
-  Escolaridade         Escolaridade
-  Religiao             String?
-  IgrejaFrequenta      String?
-  Sacramentos          Sacramentos
-  Pastoral             Pastoral
-  NomeConvidadoPor     String?
-  TelefoneConvidadoPor String?
-  EnderecoConvidadoPor String?
-  Observacoes          String?
-  AnoEncontro          String
-  CorCirculoOrigem     CoresCirculos
+  naturalidade         String
+  filiacaoPai          String
+  filiacaoMae          String
+  escolaridade         Escolaridade
+  religiao             String?
+  igrejaFrequenta      String?
+  sacramentos          Sacramentos
+  pastoral             Pastoral
+  nomeConvidadoPor     String?
+  telefoneConvidadoPor String?
+  enderecoConvidadoPor String?
+  observacoes          String?
+  anoEncontro          String
+  corCirculoOrigem     CoresCirculos
   createdAt            DateTime      @default(now())
   updatedAt            DateTime      @updatedAt
   igreja               Igreja        @relation(fields: [igrejaId], references: [id])
