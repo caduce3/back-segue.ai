@@ -148,8 +148,8 @@ model Ficha {
   endereco             String
   dataNascimento       DateTime
   naturalidade         String
-  filiacaoPai          String
-  filiacaoMae          String
+  filiacaoPai          String?
+  filiacaoMae          String?
   escolaridade         Escolaridade
   religiao             String?
   igrejaFrequenta      String?
