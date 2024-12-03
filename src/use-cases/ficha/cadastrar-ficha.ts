@@ -103,7 +103,7 @@ export class CadastrarFichaUseCase {
       sacramentos,
       pastoral,
       nomeConvidadoPor,
-      telefoneConvidadoPor,
+      telefoneConvidadoPor: telefoneConvidadoPor ? validarEFormatarTelefone(telefoneConvidadoPor) : undefined,
       enderecoConvidadoPor,
       observacoes,
       anoEncontro,
