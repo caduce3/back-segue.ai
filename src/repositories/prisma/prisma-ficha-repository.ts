@@ -30,4 +30,14 @@ export class PrismaFichaRepository implements FichaRepository {
 
     return ficha;
   }
+
+  async deletarFicha(id: string): Promise<Ficha | null> {
+    const ficha = await prisma.ficha.delete({
+      where: {
+        id,
+      },
+    });
+
+    return ficha;
+  }
 }
