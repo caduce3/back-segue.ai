@@ -10,4 +10,24 @@ export class PrismaFichaRepository implements FichaRepository {
 
     return ficha;
   }
+
+  async findFichaByEmail(email: string): Promise<Ficha | null> {
+    const ficha = await prisma.ficha.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    return ficha;
+  }
+
+  async findFichaById(id: string): Promise<Ficha | null> {
+    const ficha = await prisma.ficha.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return ficha;
+  }
 }
