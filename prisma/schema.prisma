@@ -96,6 +96,9 @@ enum Equipes {
   ED_MONTAGEM
   ED_FINANCAS
   ED_FICHAS
+  CIRCULO
+  GRAFICA
+  MINI_MERCADO
 }
 
 enum FuncaoEquipe {
@@ -108,6 +111,15 @@ enum AvaliacaoEquipe {
   NEGATIVO
   NORMAL
   POSITIVO
+}
+
+enum CoresCirculos {
+  VERDE
+  AMARELO
+  VERMELHO
+  AZUL
+  ROSA
+  LARANJA
 }
 
 // Modelo para transações
@@ -147,6 +159,7 @@ model Ficha {
   EnderecoConvidadoPor String?
   Observacoes          String?
   AnoEncontro          String
+  CorCirculoOrigem     CoresCirculos
   createdAt            DateTime      @default(now())
   updatedAt            DateTime      @updatedAt
   igreja               Igreja        @relation(fields: [igrejaId], references: [id])
