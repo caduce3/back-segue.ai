@@ -1,11 +1,10 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { ErroAoCarregarPagina } from "@/use-cases/@errors/erro-carregar-pagina";
-import { makePegarTransactionsUseCase } from "@/use-cases/@factories/transaction/make-pegar-transactions-use-case";
-import { ErroAoCarregarTransactions } from "@/use-cases/@errors/transaction/erro-carregar-transaction";
 import { IgrejaNaoExiste } from "@/use-cases/@errors/igreja/erro-igreja-nao-existe";
 import { makePegarUnicaTransactionUseCase } from "@/use-cases/@factories/transaction/make-pegar-unica-transaction-use-case";
 import { ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja } from "@/use-cases/@errors/transaction/erro-deletar-transaction-sua-igreja";
+import { ErroTransactionNaoExiste } from "@/use-cases/@errors/transaction/erro-transaction-nao-existe";
 
 export async function pegarUnicaTransaction(
   request: FastifyRequest,
@@ -34,7 +33,7 @@ export async function pegarUnicaTransaction(
     );
   } catch (error) {
     if (
-      error instanceof ErroAoCarregarTransactions ||
+      error instanceof ErroTransactionNaoExiste ||
       error instanceof ErroAoCarregarPagina ||
       error instanceof IgrejaNaoExiste ||
       error instanceof ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja

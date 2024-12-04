@@ -1,9 +1,9 @@
 import { IgrejaRepository } from "@/repositories/igreja-repository";
 import { TransactionRepository } from "@/repositories/transaction-repository";
 import { Transaction } from "@prisma/client";
-import { ErroAoCarregarTransactions } from "../@errors/transaction/erro-carregar-transaction";
 import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
 import { verificarAcessoIgreja } from "@/services/verificar-acesso-igreja";
+import { ErroTransactionNaoExiste } from "../@errors/transaction/erro-transaction-nao-existe";
 
 interface PegarUnicaTransactionRequest {
   id: string;
@@ -36,7 +36,7 @@ export class PegarUnicaTransactionUseCase {
 
     const transaction =
       await this.transactionRepository.findTransactionById(id);
-    if (!transaction) throw new ErroAoCarregarTransactions();
+    if (!transaction) throw new ErroTransactionNaoExiste();
 
     return {
       transaction,
