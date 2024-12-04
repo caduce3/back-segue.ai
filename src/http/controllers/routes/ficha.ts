@@ -5,6 +5,7 @@ import { verificarPasta } from "@/http/middlewares/verificar-pasta";
 import { cadastrarFicha } from "../_ficha/cadastrar-ficha";
 import { deletarFicha } from "../_ficha/deletar-ficha";
 import { atualizarFicha } from "../_ficha/atualizar-ficha";
+import { pegarFichas } from "../_ficha/pegar-fichas";
 
 export async function fichaRoutes(app: FastifyInstance) {
   app.post(
@@ -25,4 +26,9 @@ export async function fichaRoutes(app: FastifyInstance) {
     atualizarFicha
   );
 
+  app.post(
+    "/pegar_fichas",
+    { onRequest: [verifyJwt, verificarPasta(["FICHAS", "PADRE", "PAROQUIA", "MONTAGEM"])] },
+    pegarFichas
+  );
 }
