@@ -40,4 +40,18 @@ export class PrismaFichaRepository implements FichaRepository {
 
     return ficha;
   }
+
+  async atualizarFicha(
+    id: string,
+    data: Prisma.FichaUncheckedUpdateInput
+  ): Promise<Ficha> {
+    const ficha = await prisma.ficha.update({
+      where: {
+        id,
+      },
+      data,
+    });
+
+    return ficha;
+  }
 }

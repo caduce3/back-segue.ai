@@ -5,4 +5,5 @@ export interface FichaRepository {
     findFichaByEmail(email: string): Promise<Ficha | null>
     findFichaById(id: string): Promise<Ficha | null>
     deletarFicha(id: string): Promise<Ficha | null>
+    atualizarFicha(id: string, data: Prisma.FichaUncheckedUpdateInput ): Promise<Ficha>
 }
