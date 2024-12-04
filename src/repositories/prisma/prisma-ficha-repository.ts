@@ -26,6 +26,9 @@ export class PrismaFichaRepository implements FichaRepository {
       where: {
         id,
       },
+      include: {
+        FichaEquipe: true,
+      }
     });
 
     return ficha;
