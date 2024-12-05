@@ -7,6 +7,7 @@ import { deletarFicha } from "../_ficha/deletar-ficha";
 import { atualizarFicha } from "../_ficha/atualizar-ficha";
 import { pegarFichas } from "../_ficha/pegar-fichas";
 import { pegarUnicaFicha } from "../_ficha/pegar-unica-ficha";
+import { cadastrarFichaEquipe } from "../_ficha-equipe/cadastrar-ficha-equipe";
 
 export async function fichaRoutes(app: FastifyInstance) {
   app.post(
@@ -47,5 +48,13 @@ export async function fichaRoutes(app: FastifyInstance) {
       ],
     },
     pegarUnicaFicha
+  );
+
+  app.post(
+    "/cadastrar_equipe_ficha",
+    {
+      onRequest: [verifyJwt, verificarPasta(["FICHAS"])],
+    },
+    cadastrarFichaEquipe
   );
 }
