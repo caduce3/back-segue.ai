@@ -26,7 +26,10 @@ export class PrismaFichaEquipeRepository implements FichaEquipeRepository {
     return fichaEquipe;
   }
 
-  async cadastrarFichaEquipe(fichaId: string, data: Prisma.FichaEquipeCreateInput): Promise<FichaEquipe | null> {
+  async cadastrarFichaEquipe(
+    fichaId: string,
+    data: Prisma.FichaEquipeCreateInput
+  ): Promise<FichaEquipe | null> {
     const ficha = await prisma.ficha.findUnique({
       where: {
         id: fichaId,
@@ -45,6 +48,16 @@ export class PrismaFichaEquipeRepository implements FichaEquipeRepository {
             id: fichaId,
           },
         },
+      },
+    });
+
+    return fichaEquipe;
+  }
+
+  async findFichaEquipeById(fichaId: string): Promise<FichaEquipe | null> {
+    const fichaEquipe = await prisma.fichaEquipe.findUnique({
+      where: {
+        id: fichaId,
       },
     });
 
