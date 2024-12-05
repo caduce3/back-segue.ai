@@ -25,4 +25,29 @@ export class PrismaFichaEquipeRepository implements FichaEquipeRepository {
 
     return fichaEquipe;
   }
+
+  async cadastrarFichaEquipe(fichaId: string, data: Prisma.FichaEquipeCreateInput): Promise<FichaEquipe | null> {
+    const ficha = await prisma.ficha.findUnique({
+      where: {
+        id: fichaId,
+      },
+    });
+
+    if (!ficha) {
+      return null;
+    }
+
+    const fichaEquipe = await prisma.fichaEquipe.create({
+      data: {
+        ...data,
+        ficha: {
+          connect: {
+            id: fichaId,
+          },
+        },
+      },
+    });
+
+    return fichaEquipe;
+  }
 }
