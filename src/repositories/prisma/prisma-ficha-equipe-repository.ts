@@ -63,4 +63,18 @@ export class PrismaFichaEquipeRepository implements FichaEquipeRepository {
 
     return fichaEquipe;
   }
+
+  async atualizarFichaEquipe(
+    id: string,
+    data: Prisma.FichaEquipeUpdateInput
+  ): Promise<FichaEquipe | null> {
+    const fichaEquipe = await prisma.fichaEquipe.update({
+      where: {
+        id,
+      },
+      data,
+    });
+
+    return fichaEquipe;
+  }
 }

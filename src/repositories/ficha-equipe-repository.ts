@@ -5,4 +5,5 @@ export interface FichaEquipeRepository {
   findFichaEquipeById(fichaId: string): Promise<FichaEquipe | null>;
   deletarFichaEquipeById(id: string): Promise<FichaEquipe | null>;
   cadastrarFichaEquipe(fichaId: string, data: Prisma.FichaEquipeCreateInput): Promise<FichaEquipe | null>;
+  atualizarFichaEquipe(id: string, data: Prisma.FichaEquipeUpdateInput): Promise<FichaEquipe | null>;
 }
