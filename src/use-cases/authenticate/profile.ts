@@ -28,7 +28,7 @@ export class GetProfileUseCase {
     }
 
     // Se não encontrar na tabela Igreja, busca na tabela User
-    const usuario = await this.equipeDirigenteRepository.pegarUnicoUserEquipeDirigente(id);
+    const usuario = await this.equipeDirigenteRepository.findUserEquipeDirigenteById(id);
 
     if (!usuario) {
       throw new UsuarioNaoExiste();
