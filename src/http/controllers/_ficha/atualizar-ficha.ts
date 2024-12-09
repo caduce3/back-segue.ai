@@ -1,4 +1,5 @@
 import { ErroEquipeDirigenteNaoExiste } from "@/use-cases/@errors/equipeDirigente/erro-user-equipe-dirigente-nao-existe";
+import { EmailJaCadastrado } from "@/use-cases/@errors/erro-email-ja-cadastrado";
 import { FichajaExiste } from "@/use-cases/@errors/ficha/erro-ficha-ja-existe";
 import { IgrejaNaoExiste } from "@/use-cases/@errors/igreja/erro-igreja-nao-existe";
 import { ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja } from "@/use-cases/@errors/transaction/erro-deletar-transaction-sua-igreja";
@@ -146,7 +147,8 @@ export async function atualizarFicha(
       error instanceof FichajaExiste ||
       error instanceof IgrejaNaoExiste ||
       error instanceof ErroEquipeDirigenteNaoExiste ||
-      error instanceof ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja
+      error instanceof ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja ||
+      error instanceof EmailJaCadastrado
     ) {
       return reply.status(409).send({ message: error.message });
     }

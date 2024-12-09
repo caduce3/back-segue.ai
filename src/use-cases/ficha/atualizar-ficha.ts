@@ -10,7 +10,6 @@ import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repos
 import { FichaRepository } from "@/repositories/ficha-repository";
 import { IgrejaRepository } from "@/repositories/igreja-repository";
 import { verificarAcessoIgreja } from "@/services/verificar-acesso-igreja";
-import { FichajaExiste } from "../@errors/ficha/erro-ficha-ja-existe";
 import { FichaNaoExiste } from "../@errors/ficha/erro-ficha-nao-existe";
 import { EmailJaCadastrado } from "../@errors/erro-email-ja-cadastrado";
 
@@ -88,8 +87,14 @@ export class AtualizarFichaUseCase {
     const encontrarFicha = await this.fichaRepository.findFichaById(id);
     if (!encontrarFicha) throw new FichaNaoExiste();
 
-    if (email?.trim().toLowerCase() === encontrarFicha.email)
-      throw new EmailJaCadastrado();
+    if (email && email.trim().toLowerCase() !== encontrarFicha.email) {
+      const emailJaCadastrado = await this.fichaRepository.findFichaByEmail(
+        email.trim().toLowerCase()
+      );
+      if (emailJaCadastrado) {
+        throw new EmailJaCadastrado();
+      }
+    }
 
     const updateFicha = await this.fichaRepository.atualizarFicha(id, {
       nomePastaFichas,
