@@ -98,7 +98,9 @@ export class AtualizarFichaUseCase {
 
     const updateFicha = await this.fichaRepository.atualizarFicha(id, {
       nomePastaFichas,
-      dataRecebimento,
+      dataRecebimento: dataRecebimento
+        ? new Date(dataRecebimento.split("/").reverse().join("-")).toISOString()
+        : undefined,
       nomeJovem,
       email,
       telefone: telefone
