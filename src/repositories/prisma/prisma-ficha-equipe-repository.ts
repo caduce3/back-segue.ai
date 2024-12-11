@@ -80,13 +80,13 @@ export class PrismaFichaEquipeRepository implements FichaEquipeRepository {
 
   async pegarEquipesFicha(
     take: number,
-    page: number,
+    pageEquipe: number,
     fichaId: string
   ): Promise<{
     equipesFicha: FichaEquipe[];
     totalCount: number;
   }> {
-    const skip = (page - 1) * take;
+    const skip = (pageEquipe - 1) * take;
 
     // Construindo as condições dinamicamente
     const conditions: Prisma.FichaEquipeWhereInput[] = [];

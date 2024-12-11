@@ -11,13 +11,13 @@ export async function pegarEquipesFicha(
   reply: FastifyReply
 ) {
   const pegarEquipesFichaBodySchema = z.object({
-    page: z.number().positive(),
+    pageEquipe: z.number().positive(),
     igrejaId: z.string().uuid(),
     idUserEquipeDirigente: z.string().uuid(),
     fichaId: z.string().uuid(),
   });
 
-  const { page, igrejaId, idUserEquipeDirigente, fichaId } =
+  const { pageEquipe, igrejaId, idUserEquipeDirigente, fichaId } =
     pegarEquipesFichaBodySchema.parse(request.body);
 
   try {
@@ -25,7 +25,7 @@ export async function pegarEquipesFicha(
 
     const { equipesFichaList, totalItens, totalPages } =
       await pegarEquipesFichaUseCase.execute({
-        page,
+        pageEquipe,
         igrejaId,
         idUserEquipeDirigente,
         fichaId,
@@ -34,7 +34,7 @@ export async function pegarEquipesFicha(
     return reply.status(200).send({
       totalItens,
       totalPages,
-      currentPage: page,
+      currentPage: pageEquipe,
       equipesFichaList,
     });
   } catch (error) {

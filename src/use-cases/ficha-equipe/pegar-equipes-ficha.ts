@@ -7,7 +7,7 @@ import { FichaEquipeRepository } from "@/repositories/ficha-equipe-repository";
 import { ErroAoCarregarEquipesFicha } from "../@errors/ficha-equipe/erro-carregar-equipes-ficha";
 
 interface PegarEquipesFichaRequest {
-  page: number;
+  pageEquipe: number;
   igrejaId: string;
   idUserEquipeDirigente: string;
   fichaId: string;
@@ -28,12 +28,12 @@ export class PegarEquipesFichaUseCase {
   ) {}
 
   async execute({
-    page,
+    pageEquipe,
     igrejaId,
     idUserEquipeDirigente,
     fichaId,
   }: PegarEquipesFichaRequest): Promise<PegarEquipesFichaResponse> {
-    if (page <= 0) page = 1;
+    if (pageEquipe <= 0) pageEquipe = 1;
     const take = 5;
 
     await verificarAcessoIgreja(
@@ -44,7 +44,11 @@ export class PegarEquipesFichaUseCase {
     );
 
     const { equipesFicha, totalCount } =
-      await this.fichaEquipeRepository.pegarEquipesFicha(take, page, fichaId);
+      await this.fichaEquipeRepository.pegarEquipesFicha(
+        take,
+        pageEquipe,
+        fichaId
+      );
 
     if (!equipesFicha || equipesFicha.length === 0) {
       return {
@@ -57,13 +61,13 @@ export class PegarEquipesFichaUseCase {
 
     const totalPages = Math.ceil(totalCount / take);
     if (totalPages === 0) throw new ErroAoCarregarEquipesFicha();
-    if (page > totalPages) throw new ErroAoCarregarPagina();
+    if (pageEquipe > totalPages) throw new ErroAoCarregarPagina();
 
     return {
       equipesFichaList: equipesFicha,
       totalItens: totalCount,
       totalPages,
-      currentPage: page,
+      currentPage: pageEquipe,
     };
   }
 }

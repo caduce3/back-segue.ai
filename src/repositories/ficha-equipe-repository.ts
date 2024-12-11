@@ -8,7 +8,7 @@ export interface FichaEquipeRepository {
   atualizarFichaEquipe(id: string, data: Prisma.FichaEquipeUpdateInput): Promise<FichaEquipe | null>;
   pegarEquipesFicha(
     take: number,
-    page: number,
+    pageEquipe: number,
     fichaId: string,
   ): Promise<{
     equipesFicha: FichaEquipe[];
