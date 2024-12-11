@@ -105,12 +105,13 @@ enum FuncaoEquipe {
   COORDENADOR
   EQUIPISTA
   ED
+  APOIO
 }
 
 enum AvaliacaoEquipe {
-  NEGATIVO
-  NORMAL
-  POSITIVO
+  NEGATIVA
+  POSITIVA
+  NEUTRA
 }
 
 enum CoresCirculos {
