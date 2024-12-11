@@ -34,7 +34,7 @@ export class PegarEquipesFichaUseCase {
     fichaId,
   }: PegarEquipesFichaRequest): Promise<PegarEquipesFichaResponse> {
     if (page <= 0) page = 1;
-    const take = 10;
+    const take = 5;
 
     await verificarAcessoIgreja(
       igrejaId,
