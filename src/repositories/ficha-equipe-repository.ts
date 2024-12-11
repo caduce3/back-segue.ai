@@ -6,4 +6,12 @@ export interface FichaEquipeRepository {
   deletarFichaEquipeById(id: string): Promise<FichaEquipe | null>;
   cadastrarFichaEquipe(fichaId: string, data: Prisma.FichaEquipeCreateInput): Promise<FichaEquipe | null>;
   atualizarFichaEquipe(id: string, data: Prisma.FichaEquipeUpdateInput): Promise<FichaEquipe | null>;
+  pegarEquipesFicha(
+    take: number,
+    page: number,
+    fichaId: string,
+  ): Promise<{
+    equipesFicha: FichaEquipe[];
+    totalCount: number;
+  }>;
 }
