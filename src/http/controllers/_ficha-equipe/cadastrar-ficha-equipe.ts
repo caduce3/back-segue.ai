@@ -43,9 +43,9 @@ export async function cadastrarFichaEquipe(
       FuncaoEquipe.EQUIPISTA,
     ]),
     avaliacao: z.enum([
-      AvaliacaoEquipe.NEGATIVO,
-      AvaliacaoEquipe.POSITIVO,
-      AvaliacaoEquipe.NORMAL,
+      AvaliacaoEquipe.NEGATIVA,
+      AvaliacaoEquipe.POSITIVA,
+      AvaliacaoEquipe.NEUTRA,
     ]),
     observacoes: z.string().optional(),
   });

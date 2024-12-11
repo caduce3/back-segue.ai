@@ -44,9 +44,9 @@ export async function atualizarFichaEquipe(
       .optional(),
     avaliacao: z
       .enum([
-        AvaliacaoEquipe.NEGATIVO,
-        AvaliacaoEquipe.POSITIVO,
-        AvaliacaoEquipe.NORMAL,
+        AvaliacaoEquipe.NEGATIVA,
+        AvaliacaoEquipe.POSITIVA,
+        AvaliacaoEquipe.NEUTRA,
       ])
       .optional(),
     observacoes: z.string().optional(),
