@@ -1,5 +1,5 @@
 export class ErroContaInvativa extends Error {
     constructor() {
-        super('Sua conta está invativa, contate o suporte (cadulucenapj@gmail.com) para mais informações.')
+        super('Sua conta está inativa, contate o administrador da paróquia.')
     }
 }
