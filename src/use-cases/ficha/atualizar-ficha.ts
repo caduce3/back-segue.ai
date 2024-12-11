@@ -107,7 +107,9 @@ export class AtualizarFichaUseCase {
         ? validarEFormatarTelefone(telefone)
         : encontrarFicha.telefone,
       endereco,
-      dataNascimento,
+      dataNascimento: dataNascimento
+        ? new Date(dataNascimento.split("/").reverse().join("-")).toISOString()
+        : undefined,
       naturalidade,
       filiacaoPai,
       filiacaoMae,
