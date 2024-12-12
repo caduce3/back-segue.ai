@@ -105,7 +105,7 @@ export class PrismaFichaEquipeRepository implements FichaEquipeRepository {
     const equipesFicha = await prisma.fichaEquipe.findMany({
       where: whereClause,
       orderBy: {
-        createdAt: "desc",
+        ano: "desc",
       },
       take,
       skip,
