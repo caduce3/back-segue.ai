@@ -81,7 +81,7 @@ export async function fichaRoutes(app: FastifyInstance) {
   app.post(
     "/pegar_unica_equipe_ficha",
     {
-      onRequest: [verifyJwt, verificarPasta(["FICHAS"])],
+      onRequest: [verifyJwt, verificarPasta(["FICHAS", "PADRE", "PAROQUIA", "MONTAGEM"])],
     },
     pegarUnicaFichaEquipe
   );
