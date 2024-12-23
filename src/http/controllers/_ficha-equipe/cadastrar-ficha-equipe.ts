@@ -53,13 +53,11 @@ export async function cadastrarFichaEquipe(
       AvaliacaoEquipe.NEUTRA,
     ]),
     observacoes: z.string().optional(),
-    tipoEncontro: z
-      .enum([
-        TipoEcontro.PRIMEIRA_ETAPA,
-        TipoEcontro.SEGUNDA_ETAPA,
-        TipoEcontro.CARAVANA,
-      ])
-      .optional(),
+    tipoEncontro: z.enum([
+      TipoEcontro.PRIMEIRA_ETAPA,
+      TipoEcontro.SEGUNDA_ETAPA,
+      TipoEcontro.CARAVANA,
+    ]),
   });
 
   const {
