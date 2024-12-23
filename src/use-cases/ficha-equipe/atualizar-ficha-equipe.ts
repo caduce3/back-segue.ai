@@ -3,14 +3,13 @@ import {
   Equipes,
   FichaEquipe,
   FuncaoEquipe,
+  TipoEcontro,
 } from "@prisma/client";
 import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
 import { IgrejaRepository } from "@/repositories/igreja-repository";
 import { verificarAcessoIgreja } from "@/services/verificar-acesso-igreja";
 import { FichaEquipeRepository } from "@/repositories/ficha-equipe-repository";
 import { FichaNaoExiste } from "../@errors/ficha/erro-ficha-nao-existe";
-import { FichaRepository } from "@/repositories/ficha-repository";
-import { ErroAoCriarFichaEquipe } from "../@errors/ficha-equipe/erro-criar-ficha-equipe";
 import { ErroAoAtualizarFichaEquipe } from "../@errors/ficha-equipe/erro-atualizar-ficha-equipe";
 
 interface AtualizarFichaEquipeRequest {
@@ -22,6 +21,7 @@ interface AtualizarFichaEquipeRequest {
   funcao?: FuncaoEquipe;
   avaliacao?: AvaliacaoEquipe;
   observacoes?: string;
+  tipoEncontro?: TipoEcontro;
 }
 
 interface AtualizarFichaEquipeResponse {
@@ -44,6 +44,7 @@ export class AtualizarFichaEquipeUseCase {
     funcao,
     avaliacao,
     observacoes,
+    tipoEncontro
   }: AtualizarFichaEquipeRequest): Promise<AtualizarFichaEquipeResponse> {
     await verificarAcessoIgreja(
       igrejaId,
@@ -64,6 +65,7 @@ export class AtualizarFichaEquipeUseCase {
         funcao,
         avaliacao,
         observacoes,
+        tipoEncontro
       }
     );
 
