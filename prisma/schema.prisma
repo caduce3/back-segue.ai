@@ -99,6 +99,13 @@ enum Equipes {
   CIRCULO
   GRAFICA
   MINI_MERCADO
+  CARAVANA
+}
+
+enum TipoEcontro {
+  PRIMEIRA_ETAPA
+  SEGUNDA_ETAPA
+  CARAVANA
 }
 
 enum FuncaoEquipe {
@@ -170,16 +177,17 @@ model Ficha {
 }
 
 model FichaEquipe {
-  id          String          @id @default(uuid())
-  equipe      Equipes
-  ano         String
-  funcao      FuncaoEquipe
-  avaliacao   AvaliacaoEquipe
-  observacoes String?
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
-  ficha       Ficha           @relation(fields: [fichaId], references: [id])
-  fichaId     String
+  id           String          @id @default(uuid())
+  equipe       Equipes
+  ano          String
+  funcao       FuncaoEquipe
+  avaliacao    AvaliacaoEquipe
+  tipoEncontro TipoEcontro
+  observacoes  String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  ficha        Ficha           @relation(fields: [fichaId], references: [id])
+  fichaId      String
 }
 
 // Modelo para Igreja
