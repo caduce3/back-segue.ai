@@ -4,6 +4,7 @@ import {
   Equipes,
   FichaEquipe,
   FuncaoEquipe,
+  TipoEcontro,
 } from "@prisma/client";
 import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
 import { IgrejaRepository } from "@/repositories/igreja-repository";
@@ -22,6 +23,7 @@ interface CadastrarFichaEquipeRequest {
   funcao: FuncaoEquipe;
   avaliacao: AvaliacaoEquipe;
   observacoes?: string;
+  tipoEncontro?: TipoEcontro;
 }
 
 interface CadastrarFichaEquipeResponse {
@@ -45,6 +47,7 @@ export class CadastrarFichaEquipeUseCase {
     funcao,
     avaliacao,
     observacoes,
+    tipoEncontro
   }: CadastrarFichaEquipeRequest): Promise<CadastrarFichaEquipeResponse> {
     await verificarAcessoIgreja(
       igrejaId,
@@ -64,6 +67,7 @@ export class CadastrarFichaEquipeUseCase {
         funcao,
         avaliacao,
         observacoes,
+        tipoEncontro,
         ficha: {
           connect: {
             id: fichaId,

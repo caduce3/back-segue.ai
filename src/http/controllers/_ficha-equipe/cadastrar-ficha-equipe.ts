@@ -4,7 +4,12 @@ import { FichaNaoExiste } from "@/use-cases/@errors/ficha/erro-ficha-nao-existe"
 import { IgrejaNaoExiste } from "@/use-cases/@errors/igreja/erro-igreja-nao-existe";
 import { ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja } from "@/use-cases/@errors/transaction/erro-deletar-transaction-sua-igreja";
 import { makeCadastrarFichaEquipeUseCase } from "@/use-cases/@factories/ficha-equipe.ts/make-cadastrar-ficha-equipe-use-case";
-import { AvaliacaoEquipe, Equipes, FuncaoEquipe } from "@prisma/client";
+import {
+  AvaliacaoEquipe,
+  Equipes,
+  FuncaoEquipe,
+  TipoEcontro,
+} from "@prisma/client";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
@@ -48,6 +53,13 @@ export async function cadastrarFichaEquipe(
       AvaliacaoEquipe.NEUTRA,
     ]),
     observacoes: z.string().optional(),
+    tipoEncontro: z
+      .enum([
+        TipoEcontro.PRIMEIRA_ETAPA,
+        TipoEcontro.SEGUNDA_ETAPA,
+        TipoEcontro.CARAVANA,
+      ])
+      .optional(),
   });
 
   const {
@@ -59,6 +71,7 @@ export async function cadastrarFichaEquipe(
     funcao,
     avaliacao,
     observacoes,
+    tipoEncontro,
   } = cadastrarFichaEquipeBodySchema.parse(request.body);
 
   try {
@@ -73,6 +86,7 @@ export async function cadastrarFichaEquipe(
       funcao,
       avaliacao,
       observacoes,
+      tipoEncontro,
     });
   } catch (error) {
     if (
