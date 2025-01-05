@@ -5,6 +5,7 @@ import {
   Ficha,
   Pastoral,
   Sacramentos,
+  Status,
 } from "@prisma/client";
 import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
 import { FichaRepository } from "@/repositories/ficha-repository";
@@ -38,6 +39,7 @@ interface AtualizarFichaRequest {
   observacoes?: string;
   anoEncontro?: string;
   corCirculoOrigem?: CoresCirculos;
+  status?: Status;
 }
 
 interface AtualizarFichaResponse {
@@ -76,6 +78,7 @@ export class AtualizarFichaUseCase {
     observacoes,
     anoEncontro,
     corCirculoOrigem,
+    status,
   }: AtualizarFichaRequest): Promise<AtualizarFichaResponse> {
     await verificarAcessoIgreja(
       igrejaId,
@@ -126,6 +129,7 @@ export class AtualizarFichaUseCase {
       observacoes,
       anoEncontro,
       corCirculoOrigem,
+      status,
     });
 
     return {

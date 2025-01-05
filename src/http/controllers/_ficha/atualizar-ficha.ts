@@ -84,6 +84,7 @@ export async function atualizarFicha(
         CoresCirculos.VERMELHO,
       ])
       .optional(),
+    status: z.enum(["ATIVO", "INATIVO"]).optional(),
   });
 
   const {
@@ -111,6 +112,7 @@ export async function atualizarFicha(
     observacoes,
     anoEncontro,
     corCirculoOrigem,
+    status,
   } = atualizarFichaBodySchema.parse(request.body);
 
   try {
@@ -141,6 +143,7 @@ export async function atualizarFicha(
       observacoes,
       anoEncontro,
       corCirculoOrigem,
+      status,
     });
   } catch (error) {
     if (
