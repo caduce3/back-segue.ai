@@ -1,5 +1,5 @@
 import { IgrejaRepository } from "@/repositories/igreja-repository";
-import { CoresCirculos, Ficha } from "@prisma/client";
+import { CoresCirculos, Equipes, Ficha } from "@prisma/client";
 import { ErroAoCarregarPagina } from "../@errors/erro-carregar-pagina";
 import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
 import { verificarAcessoIgreja } from "@/services/verificar-acesso-igreja";
@@ -10,6 +10,7 @@ interface PegarFichasMontagemRequest {
   page: number;
   igrejaId: string;
   idUserEquipeDirigente: string;
+  equipeAtual: Equipes;
   nomePastaFichas?: string;
   nomeJovem?: string;
   anoEncontro?: string;
@@ -34,6 +35,7 @@ export class PegarFichasMontagemUseCase {
     page,
     igrejaId,
     idUserEquipeDirigente,
+    equipeAtual,
     nomePastaFichas,
     nomeJovem,
     anoEncontro,
@@ -54,6 +56,7 @@ export class PegarFichasMontagemUseCase {
         take,
         page,
         igrejaId,
+        equipeAtual,
         nomePastaFichas,
         nomeJovem,
         anoEncontro,

@@ -3,7 +3,7 @@ import { z } from "zod";
 import { ErroAoCarregarPagina } from "@/use-cases/@errors/erro-carregar-pagina";
 import { IgrejaNaoExiste } from "@/use-cases/@errors/igreja/erro-igreja-nao-existe";
 import { ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja } from "@/use-cases/@errors/transaction/erro-deletar-transaction-sua-igreja";
-import { CoresCirculos } from "@prisma/client";
+import { CoresCirculos, Equipes } from "@prisma/client";
 import { ErroAoCarregarFichas } from "@/use-cases/@errors/ficha/erro-carregar-fichas";
 import { makePegarFichasMontagemUseCase } from "@/use-cases/@factories/montagem/make-pegar-fichas-use-case";
 
@@ -28,6 +28,28 @@ export async function pegarFichasMontagem(
         CoresCirculos.VERMELHO,
       ])
       .optional(),
+    equipeAtual: z.enum([
+      Equipes.ANIMACAO,
+      Equipes.CANTO,
+      Equipes.CIRCULO,
+      Equipes.COZINHA,
+      Equipes.ED_FICHAS,
+      Equipes.ED_FINANCAS,
+      Equipes.ED_MONTAGEM,
+      Equipes.ED_PALESTRA,
+      Equipes.ED_POS,
+      Equipes.ESTACIONAMENTO,
+      Equipes.FAXINA,
+      Equipes.GRAFICA,
+      Equipes.LANCHE,
+      Equipes.LITURGIA,
+      Equipes.MINI_MERCADO,
+      Equipes.SALA,
+      Equipes.TAXI,
+      Equipes.VIGILIA_PAROQUIAL,
+      Equipes.CARAVANA,
+      Equipes.NENHUMA,
+    ]),
   });
 
   const {
@@ -38,6 +60,7 @@ export async function pegarFichasMontagem(
     nomeJovem,
     anoEncontro,
     corCirculoOrigem,
+    equipeAtual,
   } = pegarFichasMontagemBodySchema.parse(request.body);
 
   try {
@@ -52,6 +75,7 @@ export async function pegarFichasMontagem(
         nomeJovem,
         anoEncontro,
         corCirculoOrigem,
+        equipeAtual,
       });
 
     return reply.status(200).send({

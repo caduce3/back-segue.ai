@@ -1,4 +1,4 @@
-import { Prisma, Ficha } from "@prisma/client";
+import { Prisma, Ficha, Equipes } from "@prisma/client";
 
 export interface FichaRepository {
   cadastrarFicha(data: Prisma.FichaCreateInput): Promise<Ficha>;
@@ -29,6 +29,7 @@ export interface FichaRepository {
     take: number,
     page: number,
     igrejaId: string,
+    equipeAtual: Equipes,
     nomePastaFichas?: string,
     nomeJovem?: string,
     anoEncontro?: string,

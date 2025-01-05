@@ -1,4 +1,4 @@
-import { Prisma, Ficha, CoresCirculos } from "@prisma/client";
+import { Prisma, Ficha, CoresCirculos, Equipes } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { FichaRepository } from "../ficha-repository";
 
@@ -129,6 +129,7 @@ export class PrismaFichaRepository implements FichaRepository {
     take: number,
     page: number,
     igrejaId: string,
+    equipeAtual: Equipes,
     nomePastaFichas?: string,
     nomeJovem?: string,
     anoEncontro?: string,
@@ -167,7 +168,7 @@ export class PrismaFichaRepository implements FichaRepository {
     conditions.push({
       igrejaId: igrejaId,
       status: "ATIVO",
-      equipeAtual: "NENHUMA",
+      equipeAtual: equipeAtual,
     });
 
     // Garantindo que só passemos o AND se tivermos condições
