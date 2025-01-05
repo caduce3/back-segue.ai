@@ -25,4 +25,20 @@ export interface FichaRepository {
     }>[];
     totalCount: number;
   }>;
+  pegarFichasMontagem(
+    take: number,
+    page: number,
+    igrejaId: string,
+    nomePastaFichas?: string,
+    nomeJovem?: string,
+    anoEncontro?: string,
+    corCirculoOrigem?: string
+  ): Promise<{
+    fichas: Prisma.FichaGetPayload<{
+      include: {
+        FichaEquipe: true;
+      };
+    }>[];
+    totalCount: number;
+  }>;
 }

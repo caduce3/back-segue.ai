@@ -8,6 +8,7 @@ import { igrejaRoutes } from "./http/controllers/routes/igreja-routes";
 import { transactionRoutes } from "./http/controllers/routes/transaction-routes";
 import { equipeDirigenteRoutes } from "./http/controllers/routes/equipe-dirigente-routes";
 import { fichaRoutes } from "./http/controllers/routes/ficha";
+import { montagemRoutes } from "./http/controllers/routes/montagem-routes";
 
 export const app = fastify();
 
@@ -34,6 +35,7 @@ app.register(igrejaRoutes);
 app.register(transactionRoutes);
 app.register(equipeDirigenteRoutes);
 app.register(fichaRoutes);
+app.register(montagemRoutes);
 app.setErrorHandler((error, _request, reply) => {
   if (error instanceof ZodError) {
     return reply
