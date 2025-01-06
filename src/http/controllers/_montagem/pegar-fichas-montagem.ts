@@ -49,6 +49,7 @@ export async function pegarFichasMontagem(
       Equipes.VIGILIA_PAROQUIAL,
       Equipes.CARAVANA,
       Equipes.NENHUMA,
+      Equipes.CG,
     ]),
   });
 
