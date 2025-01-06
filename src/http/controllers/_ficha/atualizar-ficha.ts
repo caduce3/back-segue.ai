@@ -6,6 +6,7 @@ import { ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja } from "@/use-cases/@errors/
 import { makeAtualizarFichaUseCase } from "@/use-cases/@factories/ficha/make-atualizar-ficha-use-case";
 import {
   CoresCirculos,
+  Equipes,
   Escolaridade,
   Pastoral,
   Sacramentos,
@@ -85,6 +86,26 @@ export async function atualizarFicha(
       ])
       .optional(),
     status: z.enum(["ATIVO", "INATIVO"]).optional(),
+    equipeAtual: z.enum([
+      Equipes.ANIMACAO,
+      Equipes.CANTO,
+      Equipes.CIRCULO,
+      Equipes.COZINHA,
+      Equipes.ED_FICHAS,
+      Equipes.ED_FINANCAS,
+      Equipes.ED_MONTAGEM,
+      Equipes.ED_PALESTRA,
+      Equipes.ED_POS,
+      Equipes.ESTACIONAMENTO,
+      Equipes.FAXINA,
+      Equipes.GRAFICA,
+      Equipes.LANCHE,
+      Equipes.LITURGIA,
+      Equipes.MINI_MERCADO,
+      Equipes.SALA,
+      Equipes.TAXI,
+      Equipes.NENHUMA,
+    ]),
   });
 
   const {
@@ -113,6 +134,7 @@ export async function atualizarFicha(
     anoEncontro,
     corCirculoOrigem,
     status,
+    equipeAtual
   } = atualizarFichaBodySchema.parse(request.body);
 
   try {
@@ -144,6 +166,7 @@ export async function atualizarFicha(
       anoEncontro,
       corCirculoOrigem,
       status,
+      equipeAtual
     });
   } catch (error) {
     if (

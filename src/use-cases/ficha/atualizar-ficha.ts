@@ -1,6 +1,7 @@
 import { validarEFormatarTelefone } from "@/services/formatar-telefone";
 import {
   CoresCirculos,
+  Equipes,
   Escolaridade,
   Ficha,
   Pastoral,
@@ -40,6 +41,7 @@ interface AtualizarFichaRequest {
   anoEncontro?: string;
   corCirculoOrigem?: CoresCirculos;
   status?: Status;
+  equipeAtual?: Equipes;
 }
 
 interface AtualizarFichaResponse {
@@ -79,6 +81,7 @@ export class AtualizarFichaUseCase {
     anoEncontro,
     corCirculoOrigem,
     status,
+    equipeAtual,
   }: AtualizarFichaRequest): Promise<AtualizarFichaResponse> {
     await verificarAcessoIgreja(
       igrejaId,
@@ -130,6 +133,7 @@ export class AtualizarFichaUseCase {
       anoEncontro,
       corCirculoOrigem,
       status,
+      equipeAtual,
     });
 
     return {
