@@ -101,6 +101,7 @@ enum Equipes {
   MINI_MERCADO
   CARAVANA
   NENHUMA
+  CG
 }
 
 enum TipoEcontro {

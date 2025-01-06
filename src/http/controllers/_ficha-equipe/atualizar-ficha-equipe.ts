@@ -41,7 +41,8 @@ export async function atualizarFichaEquipe(
         Equipes.SALA,
         Equipes.TAXI,
         Equipes.VIGILIA_PAROQUIAL,
-        Equipes.CARAVANA
+        Equipes.CARAVANA,
+        Equipes.CG
       ])
       .optional(),
     ano: z.string().optional(),

@@ -105,6 +105,7 @@ export async function atualizarFicha(
       Equipes.SALA,
       Equipes.TAXI,
       Equipes.NENHUMA,
+      Equipes.CG
     ]),
   });
 
