@@ -106,7 +106,7 @@ export async function atualizarFicha(
       Equipes.TAXI,
       Equipes.NENHUMA,
       Equipes.CG
-    ]),
+    ]).optional(),
   });
 
   const {
