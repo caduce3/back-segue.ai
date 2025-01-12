@@ -39,11 +39,11 @@ export async function atualizarFichaEquipe(
         Equipes.LITURGIA,
         Equipes.MINI_MERCADO,
         Equipes.SALA,
-        Equipes.TAXI,
-        Equipes.VIGILIA_PAROQUIAL,
-        Equipes.CARAVANA,
+        Equipes.VISITACAO,
+        Equipes.NENHUMA,
         Equipes.CG,
-        Equipes.ESPIRITUALIZADORA
+        Equipes.ESPIRITUALIZADORA,
+        Equipes.PROVER,
       ])
       .optional(),
     ano: z.string().optional(),

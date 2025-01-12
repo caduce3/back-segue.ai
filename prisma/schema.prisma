@@ -86,7 +86,7 @@ enum Equipes {
   LITURGIA
   CANTO
   ESTACIONAMENTO
-  TAXI
+  VISITACAO
   LANCHE
   COZINHA
   SALA
@@ -103,6 +103,7 @@ enum Equipes {
   NENHUMA
   CG
   ESPIRITUALIZADORA
+  PROVER
 }
 
 enum TipoEcontro {
