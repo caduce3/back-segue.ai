@@ -106,9 +106,6 @@ export class AtualizarFichaUseCase {
         throw new EmailJaCadastrado();
       }
     }
-    console.log("################################################################################");
-    funcaoEquipeAtual = "EQUIPISTA"
-    console.log(equipeAtual, funcaoEquipeAtual)
 
     //VERIFICAÇÃO DA REGRAS DE CRIAÇÃO DA MONTAGEM DAS EQUIPES
     if (equipeAtual && funcaoEquipeAtual) {

@@ -225,15 +225,6 @@ export class PrismaFichaRepository implements FichaRepository {
         funcaoEquipeAtual,
       },
     });
-    console.log("####################");
-    console.log({
-      igrejaId,
-      equipeAtual,
-      funcaoEquipeAtual,
-      qtdEquipeAtual,
-      qtdFuncaoEquipeAtual,
-    });
-    console.log("####################");
 
     return {
       qtdEquipeAtual,
