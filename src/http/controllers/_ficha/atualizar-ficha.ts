@@ -1,6 +1,7 @@
 import { ErroEquipeDirigenteNaoExiste } from "@/use-cases/@errors/equipeDirigente/erro-user-equipe-dirigente-nao-existe";
 import { EmailJaCadastrado } from "@/use-cases/@errors/erro-email-ja-cadastrado";
 import { FichajaExiste } from "@/use-cases/@errors/ficha/erro-ficha-ja-existe";
+import { ErroDeRegraNaMontagem } from "@/use-cases/@errors/ficha/erro-montagem-ficha";
 import { IgrejaNaoExiste } from "@/use-cases/@errors/igreja/erro-igreja-nao-existe";
 import { ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja } from "@/use-cases/@errors/transaction/erro-deletar-transaction-sua-igreja";
 import { makeAtualizarFichaUseCase } from "@/use-cases/@factories/ficha/make-atualizar-ficha-use-case";
@@ -8,6 +9,7 @@ import {
   CoresCirculos,
   Equipes,
   Escolaridade,
+  FuncaoEquipe,
   Pastoral,
   Sacramentos,
 } from "@prisma/client";
@@ -86,27 +88,38 @@ export async function atualizarFicha(
       ])
       .optional(),
     status: z.enum(["ATIVO", "INATIVO"]).optional(),
-    equipeAtual: z.enum([
-      Equipes.ANIMACAO,
-      Equipes.CANTO,
-      Equipes.CIRCULO,
-      Equipes.COZINHA,
-      Equipes.ED_FICHAS,
-      Equipes.ED_FINANCAS,
-      Equipes.ED_MONTAGEM,
-      Equipes.ED_PALESTRA,
-      Equipes.ED_POS,
-      Equipes.ESTACIONAMENTO,
-      Equipes.FAXINA,
-      Equipes.GRAFICA,
-      Equipes.LANCHE,
-      Equipes.LITURGIA,
-      Equipes.MINI_MERCADO,
-      Equipes.SALA,
-      Equipes.TAXI,
-      Equipes.NENHUMA,
-      Equipes.CG
-    ]).optional(),
+    equipeAtual: z
+      .enum([
+        Equipes.ANIMACAO,
+        Equipes.CANTO,
+        Equipes.CIRCULO,
+        Equipes.COZINHA,
+        Equipes.ED_FICHAS,
+        Equipes.ED_FINANCAS,
+        Equipes.ED_MONTAGEM,
+        Equipes.ED_PALESTRA,
+        Equipes.ED_POS,
+        Equipes.ESTACIONAMENTO,
+        Equipes.FAXINA,
+        Equipes.GRAFICA,
+        Equipes.LANCHE,
+        Equipes.LITURGIA,
+        Equipes.MINI_MERCADO,
+        Equipes.SALA,
+        Equipes.VISITACAO,
+        Equipes.NENHUMA,
+        Equipes.CG,
+        Equipes.ESPIRITUALIZADORA,
+        Equipes.PROVER
+      ])
+      .optional(),
+    funcaoEquipeAtual: z
+      .enum([
+        FuncaoEquipe.EQUIPISTA,
+        FuncaoEquipe.COORDENADOR,
+        FuncaoEquipe.APOIO,
+      ])
+      .optional(),
   });
 
   const {
@@ -135,7 +148,8 @@ export async function atualizarFicha(
     anoEncontro,
     corCirculoOrigem,
     status,
-    equipeAtual
+    equipeAtual,
+    funcaoEquipeAtual,
   } = atualizarFichaBodySchema.parse(request.body);
 
   try {
@@ -167,7 +181,8 @@ export async function atualizarFicha(
       anoEncontro,
       corCirculoOrigem,
       status,
-      equipeAtual
+      equipeAtual,
+      funcaoEquipeAtual,
     });
   } catch (error) {
     if (
@@ -175,7 +190,8 @@ export async function atualizarFicha(
       error instanceof IgrejaNaoExiste ||
       error instanceof ErroEquipeDirigenteNaoExiste ||
       error instanceof ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja ||
-      error instanceof EmailJaCadastrado
+      error instanceof EmailJaCadastrado ||
+      error instanceof ErroDeRegraNaMontagem
     ) {
       return reply.status(409).send({ message: error.message });
     }

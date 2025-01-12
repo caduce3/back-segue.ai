@@ -1,6 +1,13 @@
-import { Prisma, Ficha, CoresCirculos, Equipes } from "@prisma/client";
+import {
+  Prisma,
+  Ficha,
+  CoresCirculos,
+  Equipes,
+  FuncaoEquipe,
+} from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { FichaRepository } from "../ficha-repository";
+import { ErroDeRegraNaMontagem } from "@/use-cases/@errors/ficha/erro-montagem-ficha";
 
 export class PrismaFichaRepository implements FichaRepository {
   async cadastrarFicha(data: Prisma.FichaCreateInput): Promise<Ficha> {
@@ -194,6 +201,43 @@ export class PrismaFichaRepository implements FichaRepository {
     return {
       fichas,
       totalCount,
+    };
+  }
+
+  async verifyRulesEquipeAtual(
+    igrejaId: string,
+    equipeAtual: Equipes,
+    funcaoEquipeAtual: FuncaoEquipe
+  ): Promise<{
+    qtdEquipeAtual: number;
+    qtdFuncaoEquipeAtual: number;
+  }> {
+    const qtdEquipeAtual = await prisma.ficha.count({
+      where: {
+        igrejaId,
+        equipeAtual,
+      },
+    });
+    const qtdFuncaoEquipeAtual = await prisma.ficha.count({
+      where: {
+        igrejaId,
+        equipeAtual,
+        funcaoEquipeAtual,
+      },
+    });
+    console.log("####################");
+    console.log({
+      igrejaId,
+      equipeAtual,
+      funcaoEquipeAtual,
+      qtdEquipeAtual,
+      qtdFuncaoEquipeAtual,
+    });
+    console.log("####################");
+
+    return {
+      qtdEquipeAtual,
+      qtdFuncaoEquipeAtual,
     };
   }
 }

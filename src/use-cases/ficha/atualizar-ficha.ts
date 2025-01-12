@@ -4,6 +4,7 @@ import {
   Equipes,
   Escolaridade,
   Ficha,
+  FuncaoEquipe,
   Pastoral,
   Sacramentos,
   Status,
@@ -14,6 +15,8 @@ import { IgrejaRepository } from "@/repositories/igreja-repository";
 import { verificarAcessoIgreja } from "@/services/verificar-acesso-igreja";
 import { FichaNaoExiste } from "../@errors/ficha/erro-ficha-nao-existe";
 import { EmailJaCadastrado } from "../@errors/erro-email-ja-cadastrado";
+import { ErroDeRegraNaMontagem } from "../@errors/ficha/erro-montagem-ficha";
+import { validarRegraEquipe } from "@/services/regras-montagem-equipes";
 
 interface AtualizarFichaRequest {
   id: string;
@@ -42,6 +45,7 @@ interface AtualizarFichaRequest {
   corCirculoOrigem?: CoresCirculos;
   status?: Status;
   equipeAtual?: Equipes;
+  funcaoEquipeAtual?: FuncaoEquipe;
 }
 
 interface AtualizarFichaResponse {
@@ -82,6 +86,7 @@ export class AtualizarFichaUseCase {
     corCirculoOrigem,
     status,
     equipeAtual,
+    funcaoEquipeAtual,
   }: AtualizarFichaRequest): Promise<AtualizarFichaResponse> {
     await verificarAcessoIgreja(
       igrejaId,
@@ -100,6 +105,19 @@ export class AtualizarFichaUseCase {
       if (emailJaCadastrado) {
         throw new EmailJaCadastrado();
       }
+    }
+    console.log("################################################################################");
+    funcaoEquipeAtual = "EQUIPISTA"
+    console.log(equipeAtual, funcaoEquipeAtual)
+
+    //VERIFICAÇÃO DA REGRAS DE CRIAÇÃO DA MONTAGEM DAS EQUIPES
+    if (equipeAtual && funcaoEquipeAtual) {
+      const qtds = await this.fichaRepository.verifyRulesEquipeAtual(
+        igrejaId,
+        equipeAtual,
+        funcaoEquipeAtual
+      );
+      validarRegraEquipe(equipeAtual, qtds.qtdEquipeAtual, funcaoEquipeAtual, qtds.qtdFuncaoEquipeAtual);
     }
 
     const updateFicha = await this.fichaRepository.atualizarFicha(id, {
@@ -134,6 +152,7 @@ export class AtualizarFichaUseCase {
       corCirculoOrigem,
       status,
       equipeAtual,
+      funcaoEquipeAtual,
     });
 
     return {

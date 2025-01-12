@@ -1,4 +1,4 @@
-import { Prisma, Ficha, Equipes } from "@prisma/client";
+import { Prisma, Ficha, Equipes, FuncaoEquipe } from "@prisma/client";
 
 export interface FichaRepository {
   cadastrarFicha(data: Prisma.FichaCreateInput): Promise<Ficha>;
@@ -41,5 +41,13 @@ export interface FichaRepository {
       };
     }>[];
     totalCount: number;
+  }>;
+  verifyRulesEquipeAtual(
+    igrejaId: string,
+    equipeAtual: Equipes,
+    funcaoEquipeAtual: FuncaoEquipe
+  ): Promise<{
+    qtdEquipeAtual: number;
+    qtdFuncaoEquipeAtual: number;
   }>;
 }
