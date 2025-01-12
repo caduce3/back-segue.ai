@@ -41,7 +41,8 @@ export async function cadastrarFichaEquipe(
       Equipes.TAXI,
       Equipes.VIGILIA_PAROQUIAL,
       Equipes.CARAVANA,
-      Equipes.CG
+      Equipes.CG,
+      Equipes.ESPIRITUALIZADORA
     ]),
     ano: z.string(),
     funcao: z.enum([

@@ -102,6 +102,7 @@ enum Equipes {
   CARAVANA
   NENHUMA
   CG
+  ESPIRITUALIZADORA
 }
 
 enum TipoEcontro {
