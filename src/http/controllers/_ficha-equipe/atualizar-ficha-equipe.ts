@@ -48,7 +48,12 @@ export async function atualizarFichaEquipe(
       .optional(),
     ano: z.string().optional(),
     funcao: z
-      .enum([FuncaoEquipe.COORDENADOR, FuncaoEquipe.ED, FuncaoEquipe.EQUIPISTA])
+      .enum([
+        FuncaoEquipe.COORDENADOR,
+        FuncaoEquipe.ED,
+        FuncaoEquipe.EQUIPISTA,
+        FuncaoEquipe.APOIO,
+      ])
       .optional(),
     avaliacao: z
       .enum([

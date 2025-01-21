@@ -49,6 +49,9 @@ export async function cadastrarFichaEquipe(
       FuncaoEquipe.COORDENADOR,
       FuncaoEquipe.ED,
       FuncaoEquipe.EQUIPISTA,
+      FuncaoEquipe.APOIO
+      
+      ,
     ]),
     avaliacao: z.enum([
       AvaliacaoEquipe.NEGATIVA,
