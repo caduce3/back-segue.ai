@@ -151,36 +151,48 @@ model Transaction {
 }
 
 model Ficha {
-  id                   String        @id @default(uuid())
-  nomePastaFichas      String
-  dataRecebimento      DateTime
-  nomeJovem            String
-  email                String        @unique
-  telefone             String
-  endereco             String
-  dataNascimento       DateTime
-  naturalidade         String
-  filiacaoPai          String?
-  filiacaoMae          String?
-  escolaridade         Escolaridade
-  religiao             String?
-  igrejaFrequenta      String?
-  sacramentos          Sacramentos
-  pastoral             Pastoral
-  nomeConvidadoPor     String?
-  telefoneConvidadoPor String?
-  enderecoConvidadoPor String?
-  observacoes          String?
-  anoEncontro          String
-  corCirculoOrigem     CoresCirculos
-  status               Status        @default(ATIVO)
-  equipeAtual          Equipes       @default(NENHUMA)
-  funcaoEquipeAtual    FuncaoEquipe  @default(EQUIPISTA)
-  createdAt            DateTime      @default(now())
-  updatedAt            DateTime      @updatedAt
-  igreja               Igreja        @relation(fields: [igrejaId], references: [id])
-  igrejaId             String
-  FichaEquipe          FichaEquipe[]
+  id              String   @id @default(uuid())
+  nomePastaFichas String
+  dataRecebimento DateTime
+
+  // Pessoa principal (jovem solteiro ou um dos membros do casal)
+  nomePrincipal           String
+  emailPrincipal          String  @unique
+  telefonePrincipal       String
+  dataNascimentoPrincipal DateTime
+  naturalidadePrincipal   String
+
+  // Pessoa secundária (parceiro(a) no caso de um casal)
+  nomeSecundario           String? // Opcional para solteiros
+  emailSecundario          String?   @unique
+  telefoneSecundario       String?
+  dataNascimentoSecundario DateTime?
+  naturalidadeSecundario   String?
+
+  // Informações comuns
+  endereco          String
+  igrejaFrequenta   String?
+  pastoral          Pastoral
+  observacoes       String?
+  anoEncontro       String
+  corCirculoOrigem  CoresCirculos
+  status            Status        @default(ATIVO)
+  equipeAtual       Equipes       @default(NENHUMA)
+  funcaoEquipeAtual FuncaoEquipe  @default(EQUIPISTA)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  igreja            Igreja        @relation(fields: [igrejaId], references: [id])
+  igrejaId          String
+  FichaEquipe       FichaEquipe[]
+
+  // Campo para indicar o tipo da ficha
+  tipoFicha TipoFicha @default(JOVEM)
+}
+
+// Enum para identificar o tipo da ficha
+enum TipoFicha {
+  JOVEM
+  CASAL
 }
 
 model FichaEquipe {
