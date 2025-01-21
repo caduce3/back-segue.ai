@@ -41,6 +41,7 @@ export async function atualizarFicha(
         CoresCirculos.VERMELHO,
       ])
       .optional(),
+    tipoFicha: z.enum(["CASAL", "JOVEM"]).optional(),
 
     nomePrincipal: z.string().optional(),
     emailPrincipal: z.string().email().optional(),
@@ -144,6 +145,7 @@ export async function atualizarFicha(
     dataNascimentoSecundario,
     naturalidadeSecundario,
     apelidoSecundario,
+    tipoFicha,
 
     status,
     equipeAtual,
@@ -182,6 +184,7 @@ export async function atualizarFicha(
       dataNascimentoSecundario,
       naturalidadeSecundario,
       apelidoSecundario,
+      tipoFicha,
 
       status,
       equipeAtual,

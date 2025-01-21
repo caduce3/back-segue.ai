@@ -4,6 +4,7 @@ import {
   Escolaridade,
   Ficha,
   Sacramentos,
+  TipoFicha,
 } from "@prisma/client";
 import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
 import { FichaRepository } from "@/repositories/ficha-repository";
@@ -24,6 +25,7 @@ interface CadastrarFichaRequest {
   observacoes?: string;
   anoEncontro: string;
   corCirculoOrigem: CoresCirculos;
+  tipoFicha: TipoFicha;
 
   //coisas em comum para jovem e homem do casal
   nomePrincipal: string;
@@ -84,6 +86,7 @@ export class CadastrarFichaUseCase {
     dataNascimentoSecundario,
     naturalidadeSecundario,
     apelidoSecundario,
+    tipoFicha,
   }: CadastrarFichaRequest): Promise<CadastrarFichaResponse> {
     await verificarAcessoIgreja(
       igrejaId,
@@ -136,6 +139,7 @@ export class CadastrarFichaUseCase {
         : undefined,
       naturalidadeSecundario,
       apelidoSecundario,
+      tipoFicha,
       igreja: {
         connect: {
           id: igrejaId,

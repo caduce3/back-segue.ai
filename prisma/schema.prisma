@@ -194,7 +194,7 @@ model Ficha {
   FichaEquipe       FichaEquipe[]
 
   // Campo para indicar o tipo da ficha
-  tipoFicha TipoFicha @default(JOVEM)
+  tipoFicha TipoFicha
 }
 
 // Enum para identificar o tipo da ficha

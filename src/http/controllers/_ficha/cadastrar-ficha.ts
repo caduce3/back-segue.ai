@@ -68,6 +68,7 @@ export async function cadastrarFicha(
     dataNascimentoSecundario: z.string().optional(),
     naturalidadeSecundario: z.string().optional(),
     apelidoSecundario: z.string().optional(),
+    tipoFicha: z.enum(["JOVEM", "CASAL"]),
   });
 
   const {
@@ -97,6 +98,7 @@ export async function cadastrarFicha(
     dataNascimentoSecundario,
     naturalidadeSecundario,
     apelidoSecundario,
+    tipoFicha
   } = cadastrarFichaBodySchema.parse(request.body);
 
   try {
@@ -129,6 +131,7 @@ export async function cadastrarFicha(
       dataNascimentoSecundario,
       naturalidadeSecundario,
       apelidoSecundario,
+      tipoFicha
     });
   } catch (error) {
     if (

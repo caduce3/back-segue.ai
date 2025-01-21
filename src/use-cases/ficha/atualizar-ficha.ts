@@ -7,6 +7,7 @@ import {
   FuncaoEquipe,
   Sacramentos,
   Status,
+  TipoFicha,
 } from "@prisma/client";
 import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
 import { FichaRepository } from "@/repositories/ficha-repository";
@@ -31,6 +32,7 @@ interface AtualizarFichaRequest {
   observacoes?: string;
   anoEncontro?: string;
   corCirculoOrigem?: CoresCirculos;
+  tipoFicha?: TipoFicha;
 
   //coisas em comum para jovem e homem do casal
   nomePrincipal?: string;
@@ -97,6 +99,7 @@ export class AtualizarFichaUseCase {
     dataNascimentoSecundario,
     naturalidadeSecundario,
     apelidoSecundario,
+    tipoFicha,
 
     status,
     equipeAtual,
@@ -197,6 +200,7 @@ export class AtualizarFichaUseCase {
       status,
       equipeAtual,
       funcaoEquipeAtual,
+      tipoFicha,
     });
 
     return {
