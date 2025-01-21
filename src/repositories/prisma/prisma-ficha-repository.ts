@@ -80,7 +80,7 @@ export class PrismaFichaRepository implements FichaRepository {
     page: number,
     igrejaId: string,
     nomePastaFichas?: string,
-    nomeFicha?: string,
+    nomePrincipalOuSecundario?: string,
     anoEncontro?: string,
     corCirculoOrigem?: string
   ): Promise<{
@@ -100,11 +100,21 @@ export class PrismaFichaRepository implements FichaRepository {
       conditions.push({
         nomePastaFichas: { contains: nomePastaFichas, mode: "insensitive" },
       });
-    if (nomeFicha) {
+    if (nomePrincipalOuSecundario) {
       conditions.push({
         OR: [
-          { nomePrincipal: { contains: nomeFicha, mode: "insensitive" } },
-          { nomeSecundario: { contains: nomeFicha, mode: "insensitive" } },
+          {
+            nomePrincipal: {
+              contains: nomePrincipalOuSecundario,
+              mode: "insensitive",
+            },
+          },
+          {
+            nomeSecundario: {
+              contains: nomePrincipalOuSecundario,
+              mode: "insensitive",
+            },
+          },
         ],
       });
     }
@@ -153,7 +163,7 @@ export class PrismaFichaRepository implements FichaRepository {
     igrejaId: string,
     equipeAtual: Equipes,
     nomePastaFichas?: string,
-    nomeFicha?: string,
+    nomePrincipalOuSecundario?: string,
     anoEncontro?: string,
     corCirculoOrigem?: string
   ): Promise<{
@@ -173,11 +183,21 @@ export class PrismaFichaRepository implements FichaRepository {
       conditions.push({
         nomePastaFichas: { contains: nomePastaFichas, mode: "insensitive" },
       });
-    if (nomeFicha) {
+    if (nomePrincipalOuSecundario) {
       conditions.push({
         OR: [
-          { nomePrincipal: { contains: nomeFicha, mode: "insensitive" } },
-          { nomeSecundario: { contains: nomeFicha, mode: "insensitive" } },
+          {
+            nomePrincipal: {
+              contains: nomePrincipalOuSecundario,
+              mode: "insensitive",
+            },
+          },
+          {
+            nomeSecundario: {
+              contains: nomePrincipalOuSecundario,
+              mode: "insensitive",
+            },
+          },
         ],
       });
     }

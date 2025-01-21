@@ -12,7 +12,7 @@ interface PegarFichasRequest {
   igrejaId: string;
   idUserEquipeDirigente: string;
   nomePastaFichas?: string;
-  nomeJovem?: string;
+  nomePrincipalOuSecundario?: string;
   anoEncontro?: string;
   corCirculoOrigem?: CoresCirculos;
 }
@@ -36,7 +36,7 @@ export class PegarFichasUseCase {
     igrejaId,
     idUserEquipeDirigente,
     nomePastaFichas,
-    nomeJovem,
+    nomePrincipalOuSecundario,
     anoEncontro,
     corCirculoOrigem,
   }: PegarFichasRequest): Promise<PegarFichasResponse> {
@@ -55,7 +55,7 @@ export class PegarFichasUseCase {
       page,
       igrejaId,
       nomePastaFichas,
-      nomeJovem,
+      nomePrincipalOuSecundario,
       anoEncontro,
       corCirculoOrigem
     );

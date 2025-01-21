@@ -14,7 +14,7 @@ export interface FichaRepository {
     page: number,
     igrejaId: string,
     nomePastaFichas?: string,
-    nomeJovem?: string,
+    nomePrincipalOuSecundario?: string,
     anoEncontro?: string,
     corCirculoOrigem?: string
   ): Promise<{
@@ -31,7 +31,7 @@ export interface FichaRepository {
     igrejaId: string,
     equipeAtual: Equipes,
     nomePastaFichas?: string,
-    nomeJovem?: string,
+    nomePrincipalOuSecundario?: string,
     anoEncontro?: string,
     corCirculoOrigem?: string
   ): Promise<{

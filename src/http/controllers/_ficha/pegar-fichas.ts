@@ -16,7 +16,7 @@ export async function pegarFichas(
     igrejaId: z.string().uuid(),
     idUserEquipeDirigente: z.string().uuid(),
     nomePastaFichas: z.string().optional(),
-    nomeJovem: z.string().optional(),
+    nomePrincipalOuSecundario: z.string().optional(),
     anoEncontro: z.string().optional(),
     corCirculoOrigem: z
       .enum([
@@ -35,7 +35,7 @@ export async function pegarFichas(
     igrejaId,
     idUserEquipeDirigente,
     nomePastaFichas,
-    nomeJovem,
+    nomePrincipalOuSecundario,
     anoEncontro,
     corCirculoOrigem,
   } = pegarFichasBodySchema.parse(request.body);
@@ -49,7 +49,7 @@ export async function pegarFichas(
         igrejaId,
         idUserEquipeDirigente,
         nomePastaFichas,
-        nomeJovem,
+        nomePrincipalOuSecundario,
         anoEncontro,
         corCirculoOrigem,
       });
