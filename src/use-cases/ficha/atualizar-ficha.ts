@@ -5,7 +5,6 @@ import {
   Escolaridade,
   Ficha,
   FuncaoEquipe,
-  Pastoral,
   Sacramentos,
   Status,
 } from "@prisma/client";
@@ -22,27 +21,37 @@ interface AtualizarFichaRequest {
   id: string;
   igrejaId: string;
   idUserEquipeDirigente: string;
+
+  //coisas em comum para casal de jovem
   nomePastaFichas?: string;
   dataRecebimento?: string;
-  nomeJovem?: string;
-  email?: string;
-  telefone?: string;
   endereco?: string;
-  dataNascimento?: string;
-  naturalidade?: string;
-  filiacaoPai?: string;
-  filiacaoMae?: string;
-  escolaridade?: Escolaridade;
-  religiao?: string;
   igrejaFrequenta?: string;
-  sacramentos?: Sacramentos;
-  pastoral?: Pastoral;
-  nomeConvidadoPor?: string;
-  telefoneConvidadoPor?: string;
-  enderecoConvidadoPor?: string;
+  pastoral?: string;
   observacoes?: string;
   anoEncontro?: string;
   corCirculoOrigem?: CoresCirculos;
+
+  //coisas em comum para jovem e homem do casal
+  nomePrincipal?: string;
+  emailPrincipal?: string;
+  telefonePrincipal?: string;
+  dataNascimentoPrincipal?: string;
+  naturalidadePrincipal?: string;
+  apelidoPrincipal?: string;
+  filiacaoPai?: string;
+  filiacaoMae?: string;
+  escolaridade?: Escolaridade;
+  sacramentos?: Sacramentos;
+
+  //coisas em comum para mulher do casal
+  nomeSecundario?: string;
+  emailSecundario?: string;
+  telefoneSecundario?: string;
+  dataNascimentoSecundario?: string;
+  naturalidadeSecundario?: string;
+  apelidoSecundario?: string;
+
   status?: Status;
   equipeAtual?: Equipes;
   funcaoEquipeAtual?: FuncaoEquipe;
@@ -63,27 +72,32 @@ export class AtualizarFichaUseCase {
     id,
     igrejaId,
     idUserEquipeDirigente,
+
     nomePastaFichas,
     dataRecebimento,
-    nomeJovem,
-    email,
-    telefone,
     endereco,
-    dataNascimento,
-    naturalidade,
-    filiacaoPai,
-    filiacaoMae,
-    escolaridade,
-    religiao,
     igrejaFrequenta,
-    sacramentos,
     pastoral,
-    nomeConvidadoPor,
-    telefoneConvidadoPor,
-    enderecoConvidadoPor,
     observacoes,
     anoEncontro,
     corCirculoOrigem,
+    nomePrincipal,
+    emailPrincipal,
+    telefonePrincipal,
+    dataNascimentoPrincipal,
+    naturalidadePrincipal,
+    apelidoPrincipal,
+    filiacaoPai,
+    filiacaoMae,
+    escolaridade,
+    sacramentos,
+    nomeSecundario,
+    emailSecundario,
+    telefoneSecundario,
+    dataNascimentoSecundario,
+    naturalidadeSecundario,
+    apelidoSecundario,
+
     status,
     equipeAtual,
     funcaoEquipeAtual,
@@ -98,9 +112,24 @@ export class AtualizarFichaUseCase {
     const encontrarFicha = await this.fichaRepository.findFichaById(id);
     if (!encontrarFicha) throw new FichaNaoExiste();
 
-    if (email && email.trim().toLowerCase() !== encontrarFicha.email) {
+    if (
+      emailPrincipal &&
+      emailPrincipal.trim().toLowerCase() !== encontrarFicha.emailPrincipal
+    ) {
       const emailJaCadastrado = await this.fichaRepository.findFichaByEmail(
-        email.trim().toLowerCase()
+        emailPrincipal.trim().toLowerCase()
+      );
+      if (emailJaCadastrado) {
+        throw new EmailJaCadastrado();
+      }
+    }
+
+    if (
+      emailSecundario &&
+      emailSecundario.trim().toLowerCase() !== encontrarFicha.emailSecundario
+    ) {
+      const emailJaCadastrado = await this.fichaRepository.findFichaByEmail(
+        emailSecundario.trim().toLowerCase()
       );
       if (emailJaCadastrado) {
         throw new EmailJaCadastrado();
@@ -114,7 +143,12 @@ export class AtualizarFichaUseCase {
         equipeAtual,
         funcaoEquipeAtual
       );
-      validarRegraEquipe(equipeAtual, qtds.qtdEquipeAtual, funcaoEquipeAtual, qtds.qtdFuncaoEquipeAtual);
+      validarRegraEquipe(
+        equipeAtual,
+        qtds.qtdEquipeAtual,
+        funcaoEquipeAtual,
+        qtds.qtdFuncaoEquipeAtual
+      );
     }
 
     const updateFicha = await this.fichaRepository.atualizarFicha(id, {
@@ -122,31 +156,44 @@ export class AtualizarFichaUseCase {
       dataRecebimento: dataRecebimento
         ? new Date(dataRecebimento.split("/").reverse().join("-")).toISOString()
         : undefined,
-      nomeJovem,
-      email,
-      telefone: telefone
-        ? validarEFormatarTelefone(telefone)
-        : encontrarFicha.telefone,
       endereco,
-      dataNascimento: dataNascimento
-        ? new Date(dataNascimento.split("/").reverse().join("-")).toISOString()
-        : undefined,
-      naturalidade,
-      filiacaoPai,
-      filiacaoMae,
-      escolaridade,
-      religiao,
       igrejaFrequenta,
-      sacramentos,
       pastoral,
-      nomeConvidadoPor,
-      telefoneConvidadoPor: telefoneConvidadoPor
-        ? validarEFormatarTelefone(telefoneConvidadoPor)
-        : encontrarFicha.telefoneConvidadoPor,
-      enderecoConvidadoPor,
       observacoes,
       anoEncontro,
       corCirculoOrigem,
+      nomePrincipal,
+      emailPrincipal: emailPrincipal
+        ? emailPrincipal.trim().toLowerCase()
+        : undefined,
+      telefonePrincipal: telefonePrincipal
+        ? validarEFormatarTelefone(telefonePrincipal)
+        : undefined,
+      dataNascimentoPrincipal: dataNascimentoPrincipal
+        ? new Date(
+            dataNascimentoPrincipal.split("/").reverse().join("-")
+          ).toISOString()
+        : undefined,
+      naturalidadePrincipal,
+      apelidoPrincipal,
+      filiacaoPai,
+      filiacaoMae,
+      escolaridade,
+      sacramentos,
+      nomeSecundario,
+      emailSecundario: emailSecundario
+        ? emailSecundario.trim().toLowerCase()
+        : undefined,
+      telefoneSecundario: telefoneSecundario
+        ? validarEFormatarTelefone(telefoneSecundario)
+        : undefined,
+      dataNascimentoSecundario: dataNascimentoSecundario
+        ? new Date(
+            dataNascimentoSecundario.split("/").reverse().join("-")
+          ).toISOString()
+        : undefined,
+      naturalidadeSecundario,
+      apelidoSecundario,
       status,
       equipeAtual,
       funcaoEquipeAtual,
