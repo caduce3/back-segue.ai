@@ -3,7 +3,6 @@ import {
   CoresCirculos,
   Escolaridade,
   Ficha,
-  Pastoral,
   Sacramentos,
 } from "@prisma/client";
 import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
@@ -15,27 +14,36 @@ import { FichajaExiste } from "../@errors/ficha/erro-ficha-ja-existe";
 interface CadastrarFichaRequest {
   igrejaId: string;
   idUserEquipeDirigente: string;
+
+  //coisas em comum para casal de jovem
   nomePastaFichas: string;
   dataRecebimento: string;
-  nomeJovem: string;
-  email: string;
-  telefone: string;
   endereco: string;
-  dataNascimento: string;
-  naturalidade: string;
-  filiacaoPai?: string;
-  filiacaoMae?: string;
-  escolaridade: Escolaridade;
-  religiao?: string;
   igrejaFrequenta?: string;
-  sacramentos: Sacramentos;
-  pastoral: Pastoral;
-  nomeConvidadoPor?: string;
-  telefoneConvidadoPor?: string;
-  enderecoConvidadoPor?: string;
+  pastoral?: string;
   observacoes?: string;
   anoEncontro: string;
   corCirculoOrigem: CoresCirculos;
+
+  //coisas em comum para jovem e homem do casal
+  nomePrincipal: string;
+  emailPrincipal: string;
+  telefonePrincipal: string;
+  dataNascimentoPrincipal: string;
+  naturalidadePrincipal: string;
+  apelidoPrincipal?: string;
+  filiacaoPai?: string;
+  filiacaoMae?: string;
+  escolaridade?: Escolaridade;
+  sacramentos?: Sacramentos;
+
+  //coisas em comum para mulher do casal
+  nomeSecundario?: string;
+  emailSecundario?: string;
+  telefoneSecundario?: string;
+  dataNascimentoSecundario?: string;
+  naturalidadeSecundario?: string;
+  apelidoSecundario?: string;
 }
 
 interface CadastrarFichaResponse {
@@ -54,25 +62,28 @@ export class CadastrarFichaUseCase {
     idUserEquipeDirigente,
     nomePastaFichas,
     dataRecebimento,
-    nomeJovem,
-    email,
-    telefone,
     endereco,
-    dataNascimento,
-    naturalidade,
-    filiacaoPai,
-    filiacaoMae,
-    escolaridade,
-    religiao,
     igrejaFrequenta,
-    sacramentos,
     pastoral,
-    nomeConvidadoPor,
-    telefoneConvidadoPor,
-    enderecoConvidadoPor,
     observacoes,
     anoEncontro,
     corCirculoOrigem,
+    nomePrincipal,
+    emailPrincipal,
+    telefonePrincipal,
+    dataNascimentoPrincipal,
+    naturalidadePrincipal,
+    apelidoPrincipal,
+    filiacaoPai,
+    filiacaoMae,
+    escolaridade,
+    sacramentos,
+    nomeSecundario,
+    emailSecundario,
+    telefoneSecundario,
+    dataNascimentoSecundario,
+    naturalidadeSecundario,
+    apelidoSecundario,
   }: CadastrarFichaRequest): Promise<CadastrarFichaResponse> {
     await verificarAcessoIgreja(
       igrejaId,
@@ -81,33 +92,50 @@ export class CadastrarFichaUseCase {
       this.equipeDirigenteRepository
     );
 
-    const encontrarFicha = await this.fichaRepository.findFichaByEmail(
-      email.trim().toLowerCase()
+    const encontrarFichaPrincipal = await this.fichaRepository.findFichaByEmail(
+      emailPrincipal.trim().toLowerCase()
     );
-    if (encontrarFicha) throw new FichajaExiste();
+    if (encontrarFichaPrincipal) throw new FichajaExiste();
+
+    if (emailSecundario) {
+      const encontrarFichaSecundaria =
+        await this.fichaRepository.findFichaByEmail(
+          emailSecundario.trim().toLowerCase()
+        );
+      if (encontrarFichaSecundaria) throw new FichajaExiste();
+    }
 
     const ficha = await this.fichaRepository.cadastrarFicha({
       nomePastaFichas,
       dataRecebimento: new Date(dataRecebimento),
-      nomeJovem,
-      email: email.trim().toLowerCase(),
-      telefone: validarEFormatarTelefone(telefone),
       endereco,
-      dataNascimento: new Date(dataNascimento),
-      naturalidade,
-      filiacaoPai,
-      filiacaoMae,
-      escolaridade,
-      religiao,
       igrejaFrequenta,
-      sacramentos,
       pastoral,
-      nomeConvidadoPor,
-      telefoneConvidadoPor: telefoneConvidadoPor ? validarEFormatarTelefone(telefoneConvidadoPor) : undefined,
-      enderecoConvidadoPor,
       observacoes,
       anoEncontro,
       corCirculoOrigem,
+      nomePrincipal,
+      emailPrincipal: emailPrincipal.trim().toLowerCase(),
+      telefonePrincipal: validarEFormatarTelefone(telefonePrincipal),
+      dataNascimentoPrincipal: new Date(dataNascimentoPrincipal),
+      naturalidadePrincipal,
+      apelidoPrincipal,
+      filiacaoPai,
+      filiacaoMae,
+      escolaridade,
+      sacramentos,
+      nomeSecundario,
+      emailSecundario: emailSecundario
+        ? emailSecundario.trim().toLowerCase()
+        : undefined,
+      telefoneSecundario: telefoneSecundario
+        ? validarEFormatarTelefone(telefoneSecundario)
+        : undefined,
+      dataNascimentoSecundario: dataNascimentoSecundario
+        ? new Date(dataNascimentoSecundario)
+        : undefined,
+      naturalidadeSecundario,
+      apelidoSecundario,
       igreja: {
         connect: {
           id: igrejaId,

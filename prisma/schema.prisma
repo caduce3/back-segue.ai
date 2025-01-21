@@ -151,16 +151,29 @@ model Transaction {
 }
 
 model Ficha {
-  id              String   @id @default(uuid())
-  nomePastaFichas String
-  dataRecebimento DateTime
+  id String @id @default(uuid())
+
+  //informações em comum
+  nomePastaFichas  String
+  dataRecebimento  DateTime
+  endereco         String
+  igrejaFrequenta  String?
+  pastoral         String?
+  observacoes      String?
+  anoEncontro      String
+  corCirculoOrigem CoresCirculos
 
   // Pessoa principal (jovem solteiro ou um dos membros do casal)
   nomePrincipal           String
-  emailPrincipal          String  @unique
+  emailPrincipal          String        @unique
   telefonePrincipal       String
   dataNascimentoPrincipal DateTime
   naturalidadePrincipal   String
+  apelidoPrincipal        String?
+  filiacaoPai             String?
+  filiacaoMae             String?
+  escolaridade            Escolaridade?
+  sacramentos             Sacramentos?
 
   // Pessoa secundária (parceiro(a) no caso de um casal)
   nomeSecundario           String? // Opcional para solteiros
@@ -168,14 +181,9 @@ model Ficha {
   telefoneSecundario       String?
   dataNascimentoSecundario DateTime?
   naturalidadeSecundario   String?
+  apelidoSecundario        String?
 
-  // Informações comuns
-  endereco          String
-  igrejaFrequenta   String?
-  pastoral          Pastoral
-  observacoes       String?
-  anoEncontro       String
-  corCirculoOrigem  CoresCirculos
+  // por default
   status            Status        @default(ATIVO)
   equipeAtual       Equipes       @default(NENHUMA)
   funcaoEquipeAtual FuncaoEquipe  @default(EQUIPISTA)

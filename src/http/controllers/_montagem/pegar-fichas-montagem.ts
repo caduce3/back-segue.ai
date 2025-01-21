@@ -45,7 +45,7 @@ export async function pegarFichasMontagem(
       Equipes.LITURGIA,
       Equipes.MINI_MERCADO,
       Equipes.SALA,
-      Equipes.TAXI,
+      Equipes.VISITACAO,
       Equipes.VIGILIA_PAROQUIAL,
       Equipes.CARAVANA,
       Equipes.NENHUMA,

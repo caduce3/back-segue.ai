@@ -19,11 +19,21 @@ export class PrismaFichaRepository implements FichaRepository {
   }
 
   async findFichaByEmail(email: string): Promise<Ficha | null> {
-    const ficha = await prisma.ficha.findUnique({
+    // Primeiro tenta buscar pelo emailPrincipal
+    let ficha = await prisma.ficha.findUnique({
       where: {
-        email,
+        emailPrincipal: email,
       },
     });
+
+    // Caso não encontre, busca pelo emailSecundario
+    if (!ficha) {
+      ficha = await prisma.ficha.findUnique({
+        where: {
+          emailSecundario: email,
+        },
+      });
+    }
 
     return ficha;
   }
@@ -70,7 +80,7 @@ export class PrismaFichaRepository implements FichaRepository {
     page: number,
     igrejaId: string,
     nomePastaFichas?: string,
-    nomeJovem?: string,
+    nomeFicha?: string,
     anoEncontro?: string,
     corCirculoOrigem?: string
   ): Promise<{
@@ -90,10 +100,15 @@ export class PrismaFichaRepository implements FichaRepository {
       conditions.push({
         nomePastaFichas: { contains: nomePastaFichas, mode: "insensitive" },
       });
-    if (nomeJovem)
+    if (nomeFicha) {
       conditions.push({
-        nomeJovem: { contains: nomeJovem, mode: "insensitive" },
+        OR: [
+          { nomePrincipal: { contains: nomeFicha, mode: "insensitive" } },
+          { nomeSecundario: { contains: nomeFicha, mode: "insensitive" } },
+        ],
       });
+    }
+
     if (anoEncontro)
       conditions.push({
         anoEncontro: { contains: anoEncontro, mode: "insensitive" },
@@ -138,7 +153,7 @@ export class PrismaFichaRepository implements FichaRepository {
     igrejaId: string,
     equipeAtual: Equipes,
     nomePastaFichas?: string,
-    nomeJovem?: string,
+    nomeFicha?: string,
     anoEncontro?: string,
     corCirculoOrigem?: string
   ): Promise<{
@@ -158,10 +173,14 @@ export class PrismaFichaRepository implements FichaRepository {
       conditions.push({
         nomePastaFichas: { contains: nomePastaFichas, mode: "insensitive" },
       });
-    if (nomeJovem)
+    if (nomeFicha) {
       conditions.push({
-        nomeJovem: { contains: nomeJovem, mode: "insensitive" },
+        OR: [
+          { nomePrincipal: { contains: nomeFicha, mode: "insensitive" } },
+          { nomeSecundario: { contains: nomeFicha, mode: "insensitive" } },
+        ],
       });
+    }
     if (anoEncontro)
       conditions.push({
         anoEncontro: { contains: anoEncontro, mode: "insensitive" },
