@@ -50,6 +50,8 @@ export async function pegarFichasMontagem(
       Equipes.CARAVANA,
       Equipes.NENHUMA,
       Equipes.CG,
+      Equipes.ESPIRITUALIZADORA,
+      Equipes.PROVER,
     ]),
   });
 
