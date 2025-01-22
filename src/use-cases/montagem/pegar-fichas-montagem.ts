@@ -42,7 +42,7 @@ export class PegarFichasMontagemUseCase {
     corCirculoOrigem,
   }: PegarFichasMontagemRequest): Promise<PegarFichasMontagemResponse> {
     if (page <= 0) page = 1;
-    const take = 16;
+    const take = 22;
 
     await verificarAcessoIgreja(
       igrejaId,
