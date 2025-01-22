@@ -1,5 +1,6 @@
 import { ErroEquipeDirigenteNaoExiste } from "@/use-cases/@errors/equipeDirigente/erro-user-equipe-dirigente-nao-existe";
 import { EmailJaCadastrado } from "@/use-cases/@errors/erro-email-ja-cadastrado";
+import { TelefoneDeveConterOzeDigitos } from "@/use-cases/@errors/erro-telefone-deve-ter-11-digitos";
 import { FichajaExiste } from "@/use-cases/@errors/ficha/erro-ficha-ja-existe";
 import { ErroDeRegraNaMontagem } from "@/use-cases/@errors/ficha/erro-montagem-ficha";
 import { IgrejaNaoExiste } from "@/use-cases/@errors/igreja/erro-igreja-nao-existe";
@@ -197,7 +198,8 @@ export async function atualizarFicha(
       error instanceof ErroEquipeDirigenteNaoExiste ||
       error instanceof ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja ||
       error instanceof EmailJaCadastrado ||
-      error instanceof ErroDeRegraNaMontagem
+      error instanceof ErroDeRegraNaMontagem ||
+      error instanceof TelefoneDeveConterOzeDigitos
     ) {
       return reply.status(409).send({ message: error.message });
     }
