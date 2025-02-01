@@ -3,6 +3,7 @@ import { PosRepository } from "@/repositories/pos-repository";
 import { Evento } from "@prisma/client";
 import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
 import { verificarAcessoIgreja } from "@/services/verificar-acesso-igreja";
+import { ErroCadastrarEvento } from "../@errors/pos/erro-cadastrar-evento";
 
 interface CadastrarEventoRequest {
   igrejaId: string;
@@ -52,6 +53,10 @@ export class CadastrarEventoUseCase {
         },
       },
     });
+
+    if (!evento) {
+      throw new ErroCadastrarEvento();
+    }
 
     return {
       evento,
