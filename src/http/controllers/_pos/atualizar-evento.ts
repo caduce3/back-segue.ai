@@ -54,7 +54,7 @@ export async function atualizarEvento(
     throw error;
   }
 
-  return reply.status(201).send({
+  return reply.status(200).send({
     message: "Evento atualizado com sucesso!",
   });
 }
