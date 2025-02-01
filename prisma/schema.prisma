@@ -236,6 +236,7 @@ model Igreja {
   status      Status            @default(ATIVO)
   pasta       TipoPasta         @default(PAROQUIA)
   Fichas      Ficha[]
+  Evento      Evento[]
 }
 
 // Modelo para usuarios da igreja
@@ -252,4 +253,18 @@ model EquipeDirigente {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   pasta     TipoPasta
+}
+
+model Evento {
+  id              String   @id @default(uuid())
+  nome            String
+  descricao       String?
+  horario         String
+  data            DateTime
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  igreja          Igreja   @relation(fields: [igrejaId], references: [id])
+  igrejaId        String
+  userIdCreatedAt String
+  userIdUpdatedAt String
 }
