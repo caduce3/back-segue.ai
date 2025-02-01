@@ -4,6 +4,7 @@ import { ErroAoCarregarPagina } from "@/use-cases/@errors/erro-carregar-pagina";
 import { IgrejaNaoExiste } from "@/use-cases/@errors/igreja/erro-igreja-nao-existe";
 import { makePegarUnicoEventoUseCase } from "@/use-cases/@factories/pos/make-pegar-evento-use-case";
 import { ErroEventoNaoExiste } from "@/use-cases/@errors/pos/erro-evento-nao-existe";
+import { ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja } from "@/use-cases/@errors/transaction/erro-deletar-transaction-sua-igreja";
 
 export async function pegarUnicoEvento(
   request: FastifyRequest,
@@ -32,7 +33,8 @@ export async function pegarUnicoEvento(
     if (
       error instanceof ErroEventoNaoExiste ||
       error instanceof ErroAoCarregarPagina ||
-      error instanceof IgrejaNaoExiste
+      error instanceof IgrejaNaoExiste || 
+      error instanceof ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja
     ) {
       return reply.status(409).send({ message: error.message });
     }

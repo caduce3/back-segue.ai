@@ -5,6 +5,7 @@ import { verificarPasta } from "@/http/middlewares/verificar-pasta";
 import { atualizarEvento } from "../_pos/atualizar-evento";
 import { pegarUnicoEvento } from "../_pos/pegar-evento";
 import { pegarEventos } from "../_pos/pegar-eventos";
+import { deletarEvento } from "../_pos/deletar-evento";
 
 export async function posRoutes(app: FastifyInstance) {
   app.post(
@@ -29,6 +30,12 @@ export async function posRoutes(app: FastifyInstance) {
     "/pegar_eventos",
     { onRequest: [verifyJwt, verificarPasta(["POS"])] },
     pegarEventos
+  );
+
+  app.delete(
+    "/deletar_evento",
+    { onRequest: [verifyJwt, verificarPasta(["POS"])] },
+    deletarEvento
   );
 
 }
