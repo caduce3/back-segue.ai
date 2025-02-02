@@ -100,14 +100,6 @@ export class CadastrarFichaUseCase {
     );
     if (encontrarFichaPrincipal) throw new FichajaExiste();
 
-    if (emailSecundario) {
-      const encontrarFichaSecundaria =
-        await this.fichaRepository.findFichaByEmail(
-          emailSecundario.trim().toLowerCase()
-        );
-      if (encontrarFichaSecundaria) throw new FichajaExiste();
-    }
-
     const ficha = await this.fichaRepository.cadastrarFicha({
       nomePastaFichas,
       dataRecebimento: new Date(dataRecebimento),
