@@ -28,7 +28,7 @@ export class PrismaFichaRepository implements FichaRepository {
 
     // Caso não encontre, busca pelo emailSecundario
     if (!ficha) {
-      ficha = await prisma.ficha.findUnique({
+      ficha = await prisma.ficha.findFirst({
         where: {
           emailSecundario: email,
         },
