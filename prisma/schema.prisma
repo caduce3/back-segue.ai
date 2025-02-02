@@ -177,7 +177,7 @@ model Ficha {
 
   // Pessoa secundária (parceiro(a) no caso de um casal)
   nomeSecundario           String? // Opcional para solteiros
-  emailSecundario          String?   @unique
+  emailSecundario          String?
   telefoneSecundario       String?
   dataNascimentoSecundario DateTime?
   naturalidadeSecundario   String?
