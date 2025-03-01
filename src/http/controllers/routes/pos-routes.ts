@@ -22,13 +22,13 @@ export async function posRoutes(app: FastifyInstance) {
 
   app.post(
     "/pegar_evento",
-    { onRequest: [verifyJwt, verificarPasta(["POS"])] },
+    { onRequest: [verifyJwt, verificarPasta(["POS", "PADRE", "PAROQUIA"])] },
     pegarUnicoEvento
   );
 
   app.post(
     "/pegar_eventos",
-    { onRequest: [verifyJwt, verificarPasta(["POS"])] },
+    { onRequest: [verifyJwt, verificarPasta(["POS", "PADRE", "PAROQUIA"])] },
     pegarEventos
   );
 
@@ -37,5 +37,4 @@ export async function posRoutes(app: FastifyInstance) {
     { onRequest: [verifyJwt, verificarPasta(["POS"])] },
     deletarEvento
   );
-
 }

@@ -10,6 +10,7 @@ import { equipeDirigenteRoutes } from "./http/controllers/routes/equipe-dirigent
 import { fichaRoutes } from "./http/controllers/routes/ficha";
 import { montagemRoutes } from "./http/controllers/routes/montagem-routes";
 import { posRoutes } from "./http/controllers/routes/pos-routes";
+import { palestraRoutes } from "./http/controllers/routes/palestra-routes";
 
 export const app = fastify();
 
@@ -38,6 +39,7 @@ app.register(equipeDirigenteRoutes);
 app.register(fichaRoutes);
 app.register(montagemRoutes);
 app.register(posRoutes);
+app.register(palestraRoutes);
 app.setErrorHandler((error, _request, reply) => {
   if (error instanceof ZodError) {
     return reply
