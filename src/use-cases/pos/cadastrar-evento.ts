@@ -9,9 +9,11 @@ interface CadastrarEventoRequest {
   igrejaId: string;
   idUserEquipeDirigente: string;
   nome: string;
-  descricao?: string;
-  horario: string;
+  descricao: string;
+  horarioInicio: string;
+  horarioFim: string;
   data: string;
+  avaliacao: number;
 }
 
 interface CadastrarEventoResponse {
@@ -30,8 +32,10 @@ export class CadastrarEventoUseCase {
     idUserEquipeDirigente,
     nome,
     descricao,
-    horario,
+    horarioInicio,
+    horarioFim,
     data,
+    avaliacao,
   }: CadastrarEventoRequest): Promise<CadastrarEventoResponse> {
     await verificarAcessoIgreja(
       igrejaId,
@@ -43,8 +47,10 @@ export class CadastrarEventoUseCase {
     const evento = await this.posRepository.cadastrarEvento({
       nome,
       descricao,
-      horario,
+      horarioInicio,
+      horarioFim,
       data: new Date(data),
+      avaliacao,
       userIdCreatedAt: idUserEquipeDirigente,
       userIdUpdatedAt: idUserEquipeDirigente,
       igreja: {

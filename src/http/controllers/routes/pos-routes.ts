@@ -9,31 +9,31 @@ import { deletarEvento } from "../_pos/deletar-evento";
 
 export async function posRoutes(app: FastifyInstance) {
   app.post(
-    "/cadastrar_evento",
+    "/create_evento",
     { onRequest: [verifyJwt, verificarPasta(["POS"])] },
     cadastrarEvento
   );
 
   app.put(
-    "/atualizar_evento",
+    "/update_evento",
     { onRequest: [verifyJwt, verificarPasta(["POS"])] },
     atualizarEvento
   );
 
-  app.post(
-    "/pegar_evento",
+  app.get(
+    "/get_evento",
     { onRequest: [verifyJwt, verificarPasta(["POS", "PADRE", "PAROQUIA"])] },
     pegarUnicoEvento
   );
 
-  app.post(
-    "/pegar_eventos",
+  app.get(
+    "/get_eventos",
     { onRequest: [verifyJwt, verificarPasta(["POS", "PADRE", "PAROQUIA"])] },
     pegarEventos
   );
 
   app.delete(
-    "/deletar_evento",
+    "/delete_evento",
     { onRequest: [verifyJwt, verificarPasta(["POS"])] },
     deletarEvento
   );

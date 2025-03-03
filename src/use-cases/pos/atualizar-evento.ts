@@ -12,8 +12,10 @@ interface AtualizarEventoRequest {
   idUserEquipeDirigente: string;
   nome?: string;
   descricao?: string;
-  horario?: string;
+  horarioInicio?: string;
+  horarioFim?: string;
   data?: string;
+  avaliacao?: number;
 }
 
 interface AtualizarEventoResponse {
@@ -33,8 +35,10 @@ export class AtualizarEventoUseCase {
     idUserEquipeDirigente,
     nome,
     descricao,
-    horario,
+    horarioInicio,
+    horarioFim,
     data,
+    avaliacao,
   }: AtualizarEventoRequest): Promise<AtualizarEventoResponse> {
     await verificarAcessoIgreja(
       igrejaId,
@@ -49,8 +53,10 @@ export class AtualizarEventoUseCase {
     const evento = await this.posRepository.atualizarEvento(id, {
       nome,
       descricao,
-      horario,
+      horarioInicio,
+      horarioFim,
       data: data ? new Date(data) : undefined,
+      avaliacao,
       userIdUpdatedAt: idUserEquipeDirigente,
     });
 

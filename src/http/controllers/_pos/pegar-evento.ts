@@ -17,7 +17,7 @@ export async function pegarUnicoEvento(
   });
 
   const { id, igrejaId, idUserEquipeDirigente } =
-    pegarUnicaEventoBodySchema.parse(request.body);
+    pegarUnicaEventoBodySchema.parse(request.query);
 
   try {
     const pegarUnicaEventoUseCase = makePegarUnicoEventoUseCase();
@@ -33,7 +33,7 @@ export async function pegarUnicoEvento(
     if (
       error instanceof ErroEventoNaoExiste ||
       error instanceof ErroAoCarregarPagina ||
-      error instanceof IgrejaNaoExiste || 
+      error instanceof IgrejaNaoExiste ||
       error instanceof ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja
     ) {
       return reply.status(409).send({ message: error.message });

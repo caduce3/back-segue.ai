@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Evento" ALTER COLUMN "horarioFim" SET DATA TYPE TEXT,
+ALTER COLUMN "horarioInicio" SET DATA TYPE TEXT;

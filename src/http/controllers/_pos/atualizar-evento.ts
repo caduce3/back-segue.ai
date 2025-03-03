@@ -17,8 +17,10 @@ export async function atualizarEvento(
     idUserEquipeDirigente: z.string().uuid(),
     nome: z.string().optional(),
     descricao: z.string().optional(),
+    horarioInicio: z.string().optional(),
+    horarioFim: z.string().optional(),
     data: z.string().optional(),
-    horario: z.string().optional(),
+    avaliacao: z.number().optional(),
   });
 
   const {
@@ -27,8 +29,10 @@ export async function atualizarEvento(
     idUserEquipeDirigente,
     nome,
     descricao,
+    horarioInicio,
+    horarioFim,
     data,
-    horario,
+    avaliacao,
   } = atualizarEventoBodySchema.parse(request.body);
 
   try {
@@ -40,8 +44,10 @@ export async function atualizarEvento(
       idUserEquipeDirigente,
       nome,
       descricao,
+      horarioInicio,
+      horarioFim,
       data,
-      horario,
+      avaliacao,
     });
   } catch (error) {
     if (

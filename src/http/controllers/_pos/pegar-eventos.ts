@@ -11,20 +11,20 @@ export async function pegarEventos(
   reply: FastifyReply
 ) {
   const pegarEventosBodySchema = z.object({
-    page: z.number().positive(),
+    page: z.string(),
     igrejaId: z.string(),
     idUserEquipeDirigente: z.string(),
   });
 
   const { page, igrejaId, idUserEquipeDirigente } =
-    pegarEventosBodySchema.parse(request.body);
+    pegarEventosBodySchema.parse(request.query);
 
   try {
     const pegarEventosUseCase = makePegarEventosUseCase();
 
     const { eventosList, totalItens, totalPages } =
       await pegarEventosUseCase.execute({
-        page,
+        page: Number(page),
         igrejaId,
         idUserEquipeDirigente,
       });

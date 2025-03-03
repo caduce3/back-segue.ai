@@ -14,13 +14,23 @@ export async function cadastrarEvento(
     igrejaId: z.string().uuid(),
     idUserEquipeDirigente: z.string().uuid(),
     nome: z.string(),
-    descricao: z.string().optional(),
+    descricao: z.string(),
+    horarioInicio: z.string(),
+    horarioFim: z.string(),
     data: z.string(),
-    horario: z.string(),
+    avaliacao: z.number(),
   });
 
-  const { igrejaId, idUserEquipeDirigente, nome, descricao, data, horario } =
-    cadastrarEventoBodySchema.parse(request.body);
+  const {
+    igrejaId,
+    idUserEquipeDirigente,
+    nome,
+    descricao,
+    horarioInicio,
+    horarioFim,
+    data,
+    avaliacao,
+  } = cadastrarEventoBodySchema.parse(request.body);
 
   try {
     const cadastrarEventoUseCase = makeCadastrarEventoUseCase();
@@ -30,8 +40,10 @@ export async function cadastrarEvento(
       idUserEquipeDirigente,
       nome,
       descricao,
+      horarioInicio,
+      horarioFim,
       data,
-      horario,
+      avaliacao,
     });
   } catch (error) {
     if (
