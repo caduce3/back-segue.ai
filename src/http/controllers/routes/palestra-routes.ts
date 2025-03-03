@@ -9,31 +9,31 @@ import { deletarPalestra } from "../_palestra/deletar-palestra";
 
 export async function palestraRoutes(app: FastifyInstance) {
   app.post(
-    "/cadastrar_palestra",
+    "/create_palestra",
     { onRequest: [verifyJwt, verificarPasta(["PALESTRA"])] },
     cadastrarPalestra
   );
 
   app.put(
-    "/atualizar_palestra",
+    "/update_palestra",
     { onRequest: [verifyJwt, verificarPasta(["PALESTRA"])] },
     atualizarPalestra
   );
 
   app.get(
-    "/pegar_palestra",
+    "/get_palestra",
     { onRequest: [verifyJwt, verificarPasta(["PALESTRA", "PADRE", "PAROQUIA"])] },
     pegarUnicoPalestra
   );
 
   app.get(
-    "/pegar_palestras",
+    "/get_palestras",
     { onRequest: [verifyJwt, verificarPasta(["PALESTRA", "PADRE", "PAROQUIA"])] },
     pegarPalestras
   );
 
   app.delete(
-    "/deletar_palestra",
+    "/delete_palestra",
     { onRequest: [verifyJwt, verificarPasta(["PALESTRA"])] },
     deletarPalestra
   );

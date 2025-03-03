@@ -32,7 +32,7 @@ export async function pegarPalestras(
     return reply.status(200).send({
       totalItens,
       totalPages,
-      currentPage: page,
+      currentPage: Number(page),
       palestrasList,
     });
   } catch (error) {

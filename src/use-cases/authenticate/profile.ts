@@ -3,12 +3,15 @@ import { IgrejaRepository } from "@/repositories/igreja-repository";
 import { EquipeDirigenteRepository } from "@/repositories/equipe-dirigente-repository";
 import { UsuarioNaoExiste } from "../@errors/erro-usuario-nao-existe";
 
+type IgrejaSemSenha = Omit<Igreja, "senha">;
+type UsuarioSemSenha = Omit<EquipeDirigente, "senha">;
+
 interface GetProfileUseCaseRequest {
   id: string;
 }
 
 interface GetProfileUseCaseResponse {
-  usuario: Igreja | EquipeDirigente;
+  usuario: IgrejaSemSenha | UsuarioSemSenha;
 }
 
 export class GetProfileUseCase {
@@ -20,20 +23,21 @@ export class GetProfileUseCase {
   async execute({
     id,
   }: GetProfileUseCaseRequest): Promise<GetProfileUseCaseResponse> {
-    // Tenta encontrar o usuário na tabela Igreja
     const igreja = await this.igrejaRepository.pegarUnicaIgreja(id);
 
     if (igreja) {
-      return { usuario: igreja };
+      const { senha, ...igrejaSemSenha } = igreja;
+      return { usuario: igrejaSemSenha };
     }
 
-    // Se não encontrar na tabela Igreja, busca na tabela User
-    const usuario = await this.equipeDirigenteRepository.findUserEquipeDirigenteById(id);
+    const usuario =
+      await this.equipeDirigenteRepository.findUserEquipeDirigenteById(id);
 
     if (!usuario) {
       throw new UsuarioNaoExiste();
     }
 
-    return { usuario };
+    const { senha, ...usuarioSemSenha } = usuario;
+    return { usuario: usuarioSemSenha };
   }
 }
