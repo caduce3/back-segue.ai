@@ -34,7 +34,11 @@ export class PrismaPalestraRepository implements PalestraRepository {
   async pegarPalestras(
     take: number,
     page: number,
-    igrejaId: string
+    igrejaId: string,
+    nomePalestrante?: string,
+    temaPalestra?: string,
+    dataInicio?: Date,
+    dataFim?: Date
   ): Promise<{
     palestras: Prisma.PalestraGetPayload<{}>[];
     totalCount: number;
@@ -43,6 +47,26 @@ export class PrismaPalestraRepository implements PalestraRepository {
 
     // Construindo as condições dinamicamente
     const conditions: Prisma.PalestraWhereInput[] = [];
+
+    if (nomePalestrante)
+      conditions.push({
+        nomePalestrante: { contains: nomePalestrante, mode: "insensitive" },
+      });
+
+    if (temaPalestra)
+      conditions.push({
+        temaPalestra: { contains: temaPalestra, mode: "insensitive" },
+      });
+
+    if (dataInicio)
+      conditions.push({
+        dataPalestra: { gte: dataInicio },
+      });
+
+    if (dataFim)
+      conditions.push({
+        dataPalestra: { lte: dataFim },
+      });
 
     //adicionar a condição do igrejaId
     conditions.push({ igrejaId: igrejaId });

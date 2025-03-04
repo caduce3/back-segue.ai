@@ -14,10 +14,21 @@ export async function pegarPalestras(
     page: z.string(),
     igrejaId: z.string(),
     idUserEquipeDirigente: z.string(),
+    nomePalestrante: z.string().optional(),
+    temaPalestra: z.string().optional(),
+    dataInicio: z.string().optional(),
+    dataFim: z.string().optional(),
   });
 
-  const { page, igrejaId, idUserEquipeDirigente } =
-    pegarPalestrasQuerySchema.parse(request.query);
+  const {
+    page,
+    igrejaId,
+    idUserEquipeDirigente,
+    nomePalestrante,
+    temaPalestra,
+    dataInicio,
+    dataFim,
+  } = pegarPalestrasQuerySchema.parse(request.query);
 
   try {
     const pegarPalestrasUseCase = makePegarPalestrasUseCase();
@@ -27,6 +38,10 @@ export async function pegarPalestras(
         page: Number(page),
         igrejaId,
         idUserEquipeDirigente,
+        nomePalestrante,
+        temaPalestra,
+        dataInicio,
+        dataFim,
       });
 
     return reply.status(200).send({

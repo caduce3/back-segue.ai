@@ -7,7 +7,11 @@ export interface PalestraRepository {
   pegarPalestras(
     take: number,
     page: number,
-    igrejaId: string
+    igrejaId: string,
+    nomePalestrante?: string,
+    temaPalestra?: string,
+    dataInicio?: Date,
+    dataFim?: Date
   ): Promise<{
     palestras: Prisma.PalestraGetPayload<{}>[];
     totalCount: number;

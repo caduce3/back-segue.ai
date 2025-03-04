@@ -10,6 +10,10 @@ interface PegarPalestraRequest {
   page: number;
   igrejaId: string;
   idUserEquipeDirigente: string;
+  nomePalestrante?: string;
+  temaPalestra?: string;
+  dataInicio?: string;
+  dataFim?: string;
 }
 
 interface PegarPalestraResponse {
@@ -30,6 +34,10 @@ export class PegarPalestrasUseCase {
     page,
     igrejaId,
     idUserEquipeDirigente,
+    nomePalestrante,
+    temaPalestra,
+    dataFim,
+    dataInicio,
   }: PegarPalestraRequest): Promise<PegarPalestraResponse> {
     if (page <= 0) page = 1;
     const take = 10;
@@ -41,8 +49,19 @@ export class PegarPalestrasUseCase {
       this.equipeDirigenteRepository
     );
 
+    const dataInicioDate = dataInicio ? new Date(dataInicio) : undefined;
+    const dataFimDate = dataFim ? new Date(dataFim) : undefined;
+
     const { palestras, totalCount } =
-      await this.palestraRepository.pegarPalestras(take, page, igrejaId);
+      await this.palestraRepository.pegarPalestras(
+        take,
+        page,
+        igrejaId,
+        nomePalestrante,
+        temaPalestra,
+        dataInicioDate,
+        dataFimDate
+      );
 
     if (!palestras || palestras.length === 0) {
       return {

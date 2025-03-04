@@ -50,34 +50,6 @@ export class PegarEventosUseCase {
     const dataInicioDate = dataInicio ? new Date(dataInicio) : undefined;
     const dataFimDate = dataFim ? new Date(dataFim) : undefined;
 
-    // let dataInicioDate: Date | undefined = undefined;
-    // let dataFimDate: Date | undefined = undefined;
-
-    // if (dataInicio) {
-    //   dataInicioDate = new Date(dataInicio);
-    //   // Ajusta para o início do dia (00:00) no fuso horário local
-    //   dataInicioDate.setHours(0, 0, 0, 0);
-    // }
-
-    // if (dataFim) {
-    //   dataFimDate = new Date(dataFim);
-    //   // Ajusta para o final do dia (23:59:59) no fuso horário local
-    //   dataFimDate.setHours(23, 59, 59, 999);
-    // }
-
-    // // Ajustar para UTC (ou outro fuso horário desejado) antes de enviar ao banco
-    // if (dataInicioDate) {
-    //   dataInicioDate = new Date(
-    //     dataInicioDate.toLocaleString("en-US", { timeZone: "UTC" })
-    //   );
-    // }
-
-    // if (dataFimDate) {
-    //   dataFimDate = new Date(
-    //     dataFimDate.toLocaleString("en-US", { timeZone: "UTC" })
-    //   );
-    // }
-
     const { eventos, totalCount } = await this.posRepository.pegarEventos(
       take,
       page,

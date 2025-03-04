@@ -47,12 +47,6 @@ export class PrismaPosRepository implements PosRepository {
     // Construindo as condições dinamicamente
     const conditions: Prisma.EventoWhereInput[] = [];
 
-    console.log({
-      nome,
-      dataInicio,
-      dataFim,
-    });
-
     if (nome)
       conditions.push({
         nome: { contains: nome, mode: "insensitive" },
