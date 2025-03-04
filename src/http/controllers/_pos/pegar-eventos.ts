@@ -14,9 +14,12 @@ export async function pegarEventos(
     page: z.string(),
     igrejaId: z.string(),
     idUserEquipeDirigente: z.string(),
+    nome: z.string().optional(),
+    dataInicio: z.string().optional(),
+    dataFim: z.string().optional(),
   });
 
-  const { page, igrejaId, idUserEquipeDirigente } =
+  const { page, igrejaId, idUserEquipeDirigente, nome, dataInicio, dataFim } =
     pegarEventosBodySchema.parse(request.query);
 
   try {
@@ -27,6 +30,9 @@ export async function pegarEventos(
         page: Number(page),
         igrejaId,
         idUserEquipeDirigente,
+        nome,
+        dataInicio,
+        dataFim,
       });
 
     return reply.status(200).send({

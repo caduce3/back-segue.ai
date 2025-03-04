@@ -34,7 +34,10 @@ export class PrismaPosRepository implements PosRepository {
   async pegarEventos(
     take: number,
     page: number,
-    igrejaId: string
+    igrejaId: string,
+    nome?: string,
+    dataInicio?: Date,
+    dataFim?: Date
   ): Promise<{
     eventos: Prisma.EventoGetPayload<{}>[];
     totalCount: number;
@@ -43,6 +46,27 @@ export class PrismaPosRepository implements PosRepository {
 
     // Construindo as condições dinamicamente
     const conditions: Prisma.EventoWhereInput[] = [];
+
+    console.log({
+      nome,
+      dataInicio,
+      dataFim,
+    });
+
+    if (nome)
+      conditions.push({
+        nome: { contains: nome, mode: "insensitive" },
+      });
+
+    if (dataInicio)
+      conditions.push({
+        data: { gte: dataInicio },
+      });
+
+    if (dataFim)
+      conditions.push({
+        data: { lte: dataFim },
+      });
 
     //adicionar a condição do igrejaId
     conditions.push({ igrejaId: igrejaId });

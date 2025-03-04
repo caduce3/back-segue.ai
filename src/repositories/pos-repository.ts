@@ -7,7 +7,10 @@ export interface PosRepository {
   pegarEventos(
     take: number,
     page: number,
-    igrejaId: string
+    igrejaId: string,
+    nome?: string,
+    dataInicio?: Date,
+    dataFim?: Date
   ): Promise<{ eventos: Prisma.EventoGetPayload<{}>[]; totalCount: number }>;
   atualizarEvento(
     id: string,
