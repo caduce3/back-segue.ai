@@ -47,8 +47,20 @@ export class PegarEventosUseCase {
       this.equipeDirigenteRepository
     );
 
-    const dataInicioDate = dataInicio ? new Date(dataInicio) : undefined;
-    const dataFimDate = dataFim ? new Date(dataFim) : undefined;
+    const dataInicioDate = dataInicio
+      ? new Date(dataInicio.split("/").reverse().join("-"))
+      : undefined;
+    const dataFimDate = dataFim
+      ? new Date(dataFim.split("/").reverse().join("-"))
+      : undefined;
+
+    // Verifique se a data é válida
+    if (dataInicioDate && isNaN(dataInicioDate.getTime())) {
+      throw new Error("Data de início inválida");
+    }
+    if (dataFimDate && isNaN(dataFimDate.getTime())) {
+      throw new Error("Data de fim inválida");
+    }
 
     const { eventos, totalCount } = await this.posRepository.pegarEventos(
       take,

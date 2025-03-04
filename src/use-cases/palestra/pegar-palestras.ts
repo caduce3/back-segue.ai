@@ -36,8 +36,8 @@ export class PegarPalestrasUseCase {
     idUserEquipeDirigente,
     nomePalestrante,
     temaPalestra,
-    dataFim,
     dataInicio,
+    dataFim,
   }: PegarPalestraRequest): Promise<PegarPalestraResponse> {
     if (page <= 0) page = 1;
     const take = 10;
@@ -49,8 +49,22 @@ export class PegarPalestrasUseCase {
       this.equipeDirigenteRepository
     );
 
-    const dataInicioDate = dataInicio ? new Date(dataInicio) : undefined;
-    const dataFimDate = dataFim ? new Date(dataFim) : undefined;
+    const dataInicioDate = dataInicio
+      ? new Date(dataInicio.split("/").reverse().join("-"))
+      : undefined;
+    const dataFimDate = dataFim
+      ? new Date(dataFim.split("/").reverse().join("-"))
+      : undefined;
+
+    // Verifique se a data é válida
+    if (dataInicioDate && isNaN(dataInicioDate.getTime())) {
+      throw new Error("Data inicial inválida");
+    }
+    if (dataFimDate && isNaN(dataFimDate.getTime())) {
+      if (isNaN(dataFimDate.getTime())) {
+        throw new Error("Data final inválida");
+      }
+    }
 
     const { palestras, totalCount } =
       await this.palestraRepository.pegarPalestras(
