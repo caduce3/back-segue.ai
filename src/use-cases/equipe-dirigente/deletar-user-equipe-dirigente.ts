@@ -39,7 +39,6 @@ export class DeletarUserEquipeDirigenteUseCase {
     if (!equiqueDirigenteExiste) throw new ErroEquipeDirigenteNaoExiste();
 
     //verificar se o usuario que esta deletando pertence a essa igreja
-    console.log(igrejaId, equiqueDirigenteExiste.igrejaId)
     if (igrejaId !== equiqueDirigenteExiste.igrejaId)
       throw new ErroVoceSoPodeRealizarUmaAcaoParaSuaIgreja();
 

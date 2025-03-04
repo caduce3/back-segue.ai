@@ -84,4 +84,18 @@ export class PrismaPosRepository implements PosRepository {
 
     return evento;
   }
+
+  async getEventosByYear(year: string, igrejaId: string): Promise<Evento[]> {
+    const eventos = await prisma.evento.findMany({
+      where: {
+        igrejaId: igrejaId,
+        data: {
+          gte: new Date(`${year}-01-01`),
+          lte: new Date(`${year}-12-31`),
+        },
+      },
+    });
+
+    return eventos;
+  }
 }

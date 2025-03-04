@@ -13,4 +13,5 @@ export interface PosRepository {
     id: string,
     data: Prisma.EventoUncheckedUpdateInput
   ): Promise<Evento>;
+  getEventosByYear(year: string, igrejaId: string): Promise<Evento[]>;
 }

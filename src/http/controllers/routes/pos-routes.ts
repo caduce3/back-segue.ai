@@ -6,6 +6,7 @@ import { atualizarEvento } from "../_pos/atualizar-evento";
 import { pegarUnicoEvento } from "../_pos/pegar-evento";
 import { pegarEventos } from "../_pos/pegar-eventos";
 import { deletarEvento } from "../_pos/deletar-evento";
+import { getEventosByYear } from "../_pos/get-eventos-by-year";
 
 export async function posRoutes(app: FastifyInstance) {
   app.post(
@@ -31,6 +32,8 @@ export async function posRoutes(app: FastifyInstance) {
     { onRequest: [verifyJwt, verificarPasta(["POS", "PADRE", "PAROQUIA"])] },
     pegarEventos
   );
+
+  app.get("/get_eventos_by_year", { onRequest: [verifyJwt] }, getEventosByYear);
 
   app.delete(
     "/delete_evento",
