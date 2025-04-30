@@ -34,6 +34,7 @@ enum CategoriaTransacao {
   PATROCINIO
   DOACAO
   BINGO
+  SISTEMA_SEGUEAI
   OUTRO
 }
 
