@@ -16,7 +16,7 @@ export const app = fastify();
 
 app.register(fastifyCors, {
   origin: [env.URL_PRODUCTION_FRONT, env.URL_TESTE_FRONT], // Permite apenas essa origem
-  methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Métodos permitidos
   allowedHeaders: ["Content-Type", "Authorization"], // Cabeçalhos permitidos
   credentials: true, // Permite o envio de cookies
 });
